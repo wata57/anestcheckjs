@@ -1,14 +1,29 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addPlantao, deletePlantao, getCalendario } from "./apiCalendario";
+import {
+  addPlantao,
+  deletePlantao,
+  getCalendario,
+  getCalendarioAll,
+} from "./apiCalendario";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/values";
 
-export function useCalendario(id, page) {
+export function useCalendario(user_id, page, onlyUpcomingDates) {
   const queryClient = useQueryClient();
 
   const { isPending, data } = useQuery({
-    queryKey: ["calendario", id, page],
-    queryFn: () => getCalendario(id, page),
+    queryKey: [
+      "calendario",
+      user_id,
+      page,
+      `${onlyUpcomingDates ? "upcoming-dates" : null}`,
+    ],
+    queryFn: () =>
+      getCalendario(
+        user_id,
+        page,
+        `${onlyUpcomingDates ? "upcoming-dates" : null}`
+      ),
   });
   const calendarData = data?.data;
   const count = data?.count;
@@ -17,17 +32,43 @@ export function useCalendario(id, page) {
 
   if (page < pageCount) {
     queryClient.prefetchQuery({
-      queryKey: ["calendario", id, page + 1],
-      queryFn: () => getCalendario(id, page + 1),
+      queryKey: [
+        "calendario",
+        user_id,
+        page + 1,
+        `${onlyUpcomingDates ? "upcoming-dates" : null}`,
+      ],
+      queryFn: () => getCalendario(user_id, page + 1),
     });
   }
 
   if (page > 1) {
     queryClient.prefetchQuery({
-      queryKey: ["calendario", id, page - 1],
-      queryFn: () => getCalendario(id, page - 1),
+      queryKey: [
+        "calendario",
+        user_id,
+        page - 1,
+        `${onlyUpcomingDates ? "upcoming-dates" : null}`,
+      ],
+      queryFn: () => getCalendario(user_id, page - 1),
     });
   }
+
+  return {
+    isPending,
+    calendarData,
+    count,
+  };
+}
+
+export function useCalendarioAll(user_id, month, year) {
+  const { isPending, data } = useQuery({
+    queryKey: ["calendario", month, year],
+    queryFn: () => getCalendarioAll(user_id, month, year),
+    gcTime: 0,
+  });
+  const calendarData = data?.data;
+  const count = data?.count;
 
   return {
     isPending,
@@ -41,8 +82,8 @@ export function useAddPlantao() {
   const queryClient = useQueryClient();
 
   const { mutate: addUserPlantao, isPending } = useMutation({
-    mutationFn: ({ id, date, turno }) => {
-      return addPlantao(id, date, turno);
+    mutationFn: ({ user_id, date, turno, hospital }) => {
+      return addPlantao(user_id, date, turno, hospital);
     },
     onSuccess: (id) => {
       searchParams.delete("editar-evento");

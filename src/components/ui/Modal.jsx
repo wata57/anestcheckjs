@@ -2,9 +2,15 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import { IoClose } from "react-icons/io5";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import { formatYearCalendar } from "../../utils/calendar";
 
-function Modal({ children, onClick, title }) {
+function Modal({ children, onClick, title, date, type }) {
   const ref = useOutsideClick(onClick);
+  let finalDate;
+
+  if (date && type === "adicionar") {
+    finalDate = formatYearCalendar(date);
+  }
 
   return createPortal(
     <div className="animate-left fixed top-0 left-0 w-full h-dvh backdrop-blur-lg transition-all duration-500 z-[1000]">
@@ -14,8 +20,12 @@ function Modal({ children, onClick, title }) {
       >
         <div className="animate-left w-full items-center flex flex-col">
           <div className="w-full flex items-center justify-between gap-5 md:gap-10">
-            <h1 className="font-semibold text-2xl md:text-3xl text-primary-light">
-              {title}
+            <h1 className="font-semibold text-2xl md:text-3xl text-primary-light flex items-center gap-4">
+              <span>{title}</span>
+
+              {type === "adicionar" && (
+                <span className="text-black">{finalDate}</span>
+              )}
             </h1>
 
             <IoClose
@@ -35,6 +45,7 @@ Modal.propTypes = {
   children: PropTypes.any,
   title: PropTypes.any,
   onClick: PropTypes.any,
+  date: PropTypes.any,
 };
 
 export default Modal;

@@ -1,27 +1,30 @@
 import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function NavButton({ children, path, border }) {
-  const location = useLocation();
-
+function TopBarButton({ children, path, location }) {
   return (
     <Link
       to={path}
-      className={`flex items-center gap-2 px-4 py-2 border-y rounded-sm border-gray-400 transition-colors duration-400 ${
-        location.pathname === path ? "bg-primary-light text-white" : ""
-      } ${border === "left" ? "border-l" : ""} ${
-        border === "right" ? "border-r" : ""
-      }`}
+      className={`flex items-center gap-2 px-4 py-2  transition-colors duration-400 ${
+        location
+          ? window.location.pathname === location
+            ? "bg-primary-light text-white"
+            : ""
+          : window.location.pathname === path
+          ? "bg-primary-light text-white"
+          : ""
+      } `}
     >
       {children}
     </Link>
   );
 }
 
-NavButton.propTypes = {
+TopBarButton.propTypes = {
   children: PropTypes.any,
   path: PropTypes.string,
   border: PropTypes.string,
+  location: PropTypes.string,
 };
 
-export default NavButton;
+export default TopBarButton;

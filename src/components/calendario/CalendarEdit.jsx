@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { FaCircle } from "react-icons/fa";
 import { useDeletePlantao } from "../../services/useCalendario";
 import { formatYearCalendar } from "../../utils/calendar";
+import Spinner2 from "../ui/Spinner2";
 
 function CalendarEdit({ data }) {
   const id = data.id;
@@ -36,8 +37,7 @@ function CalendarEdit({ data }) {
           disabled={isPending}
           onClick={handleClick}
         >
-          {" "}
-          {isPending ? "Carregando" : "Cancelar requisição"}
+          {isPending ? <Spinner2 /> : "Cancelar requisição"}
         </button>
       )}
     </div>

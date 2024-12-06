@@ -1,14 +1,25 @@
 import PropTypes from "prop-types";
 import CaldendarApp from "../components/calendario/CalendarApp";
-import { useCalendario } from "../services/useCalendario";
+import { useCalendarioAll } from "../services/useCalendario";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../components/ui/Spinner";
+import CalendarFilter from "../components/calendario/CalendarFilter";
 
 function Calendario({ setSidebarOpen }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const id = 1;
-  const { calendarData: data, isPending } = useCalendario(id);
+
+  const month = searchParams.get("mes");
+  const year = searchParams.get("ano");
+
+  const formattedDate = `${year}-${month}-01`;
+
+  const user_id = 1;
+  const { calendarData: data, isPending } = useCalendarioAll(
+    user_id,
+    month,
+    year
+  );
 
   useEffect(() => {
     searchParams.delete("editar-evento");
@@ -17,17 +28,20 @@ function Calendario({ setSidebarOpen }) {
 
   return (
     <div
-      className={`flex-1 ${
+      className={`relative flex-1 ${
         isPending ? "flex justify-center items-center" : ""
       }`}
       onClick={() => setSidebarOpen(false)}
     >
+      <CalendarFilter />
       {isPending ? (
         <div className="flex justify-center items-center">
           <Spinner />
         </div>
       ) : (
-        <CaldendarApp data={data} />
+        <div className="">
+          <CaldendarApp data={data} today={formattedDate} />
+        </div>
       )}
     </div>
   );

@@ -3,10 +3,12 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import AppLayout from "./components/ui/AppLayout";
 import Calendario from "./pages/Calendario";
-import Perfil from "./pages/Perfil";
+import NovoCaso from "./pages/NovoCaso";
 import Configuracoes from "./pages/Configuracoes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
+import Perfil from "./pages/Perfil";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +45,7 @@ function App() {
               }
             />
             <Route path="perfil" element={<Perfil />} />
+            <Route path="novo-caso" element={<NovoCaso />} />
             <Route
               path="calendario"
               element={<Calendario setSidebarOpen={setSidebarOpen} />}
@@ -51,6 +54,27 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 2000,
+          },
+          error: {
+            duration: 1000,
+          },
+          style: {
+            fontWeight: "bold",
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "#fffff",
+            color: "#031011",
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }

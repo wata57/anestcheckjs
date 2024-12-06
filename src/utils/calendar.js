@@ -14,3 +14,26 @@ export function formatYearCalendar(date) {
   const [year, month, day] = date.split("-");
   return `${day}/${month}/${year}`;
 }
+
+export function getDisplayedMonthAndYear(range) {
+  const startDate = new Date(range.start);
+  const endDate = new Date(range.end);
+
+  const startMonth = startDate.getMonth();
+  const endMonth = endDate.getMonth();
+  const startYear = startDate.getFullYear();
+  const endYear = endDate.getFullYear();
+
+  let month, year;
+
+  if (startMonth === endMonth && startYear === endYear) {
+    month = (startMonth + 1).toString().padStart(2, "0");
+    year = startYear;
+  } else {
+    const middleDate = new Date((startDate.getTime() + endDate.getTime()) / 2);
+    month = (middleDate.getMonth() + 1).toString().padStart(2, "0");
+    year = middleDate.getFullYear();
+  }
+
+  return { month, year };
+}

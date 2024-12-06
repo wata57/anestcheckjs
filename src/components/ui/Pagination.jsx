@@ -36,13 +36,13 @@ function Pagination({ count, pageSize, border }) {
 
   return (
     <div
-      className={`flex w-full text-xs md:text-sm justify-between select-none p-4 px-2 font-bold  ${
+      className={`flex w-full text-xs md:text-sm justify-between select-none p-4 px-2 font-bold text-white ${
         border ? "border-b-2" : ""
       }`}
     >
       <button
         className={`flex items-center ${
-          currentPage > 1 ? "text-gray-950  cursor-pointer" : "text-transparent"
+          currentPage > 1 ? "text-white  cursor-pointer" : "text-transparent"
         }`}
         onClick={prevPage}
         disabled={currentPage === 1}
@@ -52,7 +52,7 @@ function Pagination({ count, pageSize, border }) {
       <div className="flex items-center text-sm">
         <span className="mr-2">Página:</span>
         <select
-          className="bg-primary-light border text-sm text-white border-gray-300 dark:border-gray-700 rounded-full px-2 py-1 outline-none lg:hover:bg-dark-bg-3 transition-all duration-300 cursor-pointer"
+          className="bg-primary-light border text-sm text-white border-gray-300  rounded-full px-2 py-1 outline-none  transition-all duration-300 cursor-pointer"
           value={currentPage}
           onChange={handlePageChange}
         >
@@ -66,7 +66,7 @@ function Pagination({ count, pageSize, border }) {
       <button
         className={`flex items-center ${
           currentPage < pageCount
-            ? "text-gray-950  cursor-pointer"
+            ? "text-white  cursor-pointer"
             : "text-transparent"
         }`}
         onClick={nextPage}

@@ -12,13 +12,15 @@ import {
   IoCalendarSharp,
   IoHomeOutline,
   IoHomeSharp,
-  IoSettings,
-  IoSettingsOutline,
 } from "react-icons/io5";
-import { FaRegUser, FaUser } from "react-icons/fa";
+import { FaRegUser, FaRegUserCircle, FaUser } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
 
 function TopBar({ sidebarOpen, setSidebarOpen }) {
+  const now = new Date();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const year = now.getFullYear().toString();
+
   const location = useLocation();
   const title =
     location.pathname === "/home"
@@ -29,10 +31,11 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
       ? "Meus plantões"
       : location.pathname === "/configuracoes"
       ? "Configurações"
+      : location.pathname === "/novo-caso"
+      ? "Novo caso"
       : null;
-
   return (
-    <div className="flex items-center justify-between bg-blue-100 w-full">
+    <div className="flex items-center justify-between bg-primary-light w-full">
       <div className="p-4 flex gap-2 justify-start">
         <div
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -51,8 +54,8 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
           <Logo />
         </div>
       </div>
-      <div className="hidden p-4 lg:flex-1 lg:flex lg:items-center lg:justify-end w-full lg:gap-2">
-        <div className="flex items-center font-semibold select-none">
+      <div className="hidden p-4 lg:flex-1 lg:flex lg:items-center lg:justify-end w-full lg:gap-8 ">
+        <div className="flex items-center font-semibold select-none bg-white">
           <TopBarButton border="left" path="/home">
             {" "}
             {location.pathname === "home" ? <IoHomeOutline /> : <IoHomeSharp />}
@@ -61,7 +64,10 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
           <TopBarButton path="/perfil">
             {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}Perfil
           </TopBarButton>
-          <TopBarButton path="/calendario">
+          <TopBarButton
+            location="/calendario"
+            path={`/calendario?mes=${month}&ano=${year}`}
+          >
             {location.pathname === "/calendario" ? (
               <IoCalendarOutline />
             ) : (
@@ -69,21 +75,17 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
             )}{" "}
             Meus plantões
           </TopBarButton>
-          <TopBarButton>
-            {location.pathname === "/calendario" ? <MdAdd /> : <MdAdd />}
+          <TopBarButton path="/novo-caso">
+            {location.pathname === "/novo" ? <MdAdd /> : <MdAdd />}
             Novo paciente
           </TopBarButton>
-          <TopBarButton border="right">
-            {location.pathname === "/configuracoes" ? (
-              <IoSettingsOutline />
-            ) : (
-              <IoSettings />
-            )}
-            Sair
-          </TopBarButton>
+        </div>
+        <div className="flex items-center gap-2 select-none">
+          <FaRegUserCircle className="text-white text-2xl" />
+          <p className="text-white font-bold">Felipe</p>
         </div>
       </div>
-      <h2 className="lg:hidden font-bold p-4">{title}</h2>
+      <h2 className="lg:hidden font-bold p-4 text-white">{title}</h2>
     </div>
   );
 }

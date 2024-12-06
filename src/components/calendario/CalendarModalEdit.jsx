@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
 import Modal from "../ui/Modal";
 
-function CalendarModalEdit({ children, title, setSelectedEvent }) {
+function CalendarModalEdit({ children, title, setSelectedEvent, date, type }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const param = searchParams.get("editar-evento");
 
@@ -15,7 +15,7 @@ function CalendarModalEdit({ children, title, setSelectedEvent }) {
   return (
     <>
       {param === "verdade" && (
-        <Modal title={title} onClick={handleClick}>
+        <Modal type={type} date={date} title={title} onClick={handleClick}>
           {children}
         </Modal>
       )}
@@ -28,7 +28,7 @@ CalendarModalEdit.propTypes = {
   type: PropTypes.any,
   subTitle: PropTypes.string,
   modalType: PropTypes.string,
-  name: PropTypes.any,
+  date: PropTypes.any,
   title: PropTypes.any,
 };
 

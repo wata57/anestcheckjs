@@ -56,6 +56,10 @@ export default {
           "0%": { opacity: 0, transform: "translateY(-10px)" },
           "100%": { opacity: 1, transform: "0" },
         },
+        topCalendar: {
+          "0%": { opacity: 0, transform: "translateY(-10px)" },
+          "100%": { opacity: 1, transform: "0" },
+        },
         menu: {
           "0%": { opacity: 0 },
           "50%": { opacity: 0 },
@@ -70,6 +74,7 @@ export default {
         modal: "modal 0.5s ease-in-out",
         modalFooter: "modal 0.2s ease-in-out",
         top: "top 0.4s ease-in-out",
+        topCalendar: "top 0.2s ease-in-out",
         menu: "menu 0.3s ease-in-out",
       },
     },

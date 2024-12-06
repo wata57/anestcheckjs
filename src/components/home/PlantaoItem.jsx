@@ -8,8 +8,10 @@ function PlantaoItem({ data }) {
       <td className="p-4 text-center">
         {formatYearCalendar(data?.date.split("T")[0])}
       </td>
-      <td className="p-4 text-center">{data?.event}</td>
-      <td className="p-4 text-center">{data?.hospitals.hospital_name}</td>
+      <td className="p-4 text-center lg:whitespace-nowrap">{data?.event}</td>
+      <td className="p-4 text-center lg:whitespace-nowrap">
+        {data?.hospitals.hospital_name}
+      </td>
       <td className="p-4 text-center">{data?.anesthesia_group_id}</td>
       <td className="p-4">
         <div className="flex items-center justify-center gap-2">

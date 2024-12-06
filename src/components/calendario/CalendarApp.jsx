@@ -3,20 +3,22 @@ import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
 import {
   createViewMonthAgenda,
   createViewMonthGrid,
-  createViewWeek,
 } from "@schedule-x/calendar";
 import { createEventsServicePlugin } from "@schedule-x/events-service";
 
 import "@schedule-x/theme-default/dist/index.css";
 import { useEffect, useState } from "react";
-import { transformCalendarioData } from "../../utils/calendar";
+import {
+  getDisplayedMonthAndYear,
+  transformCalendarioData,
+} from "../../utils/calendar";
 import CalendarModalEdit from "./CalendarModalEdit";
 
 import { useSearchParams } from "react-router-dom";
 import CalendarEdit from "./CalendarEdit";
 import CalendarAdd from "./CalendarAdd";
 
-function CalendarApp({ data }) {
+function CalendarApp({ data, today }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedDate, setSelectedDate] = useState();
   const [selectedEvent, setSelectedEvent] = useState();
@@ -42,12 +44,20 @@ function CalendarApp({ data }) {
         },
       },
     },
-    views: [createViewMonthGrid(), createViewWeek(), createViewMonthAgenda()],
+    views: [createViewMonthGrid(), createViewMonthAgenda()],
     events: event,
     plugins: [eventsService],
     locale: "pt-BR",
+    selectedDate: today,
     defaultView: "Month Grid",
     callbacks: {
+      onRangeUpdate(range) {
+        const calendarDate = getDisplayedMonthAndYear(range);
+        searchParams.set("mes", calendarDate.month);
+        searchParams.set("ano", calendarDate.year);
+        searchParams.delete("editar-evento");
+        setSearchParams(searchParams);
+      },
       onClickDate(date) {
         setSelectedDate(date);
         searchParams.set("editar-evento", "verdade");
@@ -72,10 +82,11 @@ function CalendarApp({ data }) {
   }, []);
 
   return (
-    <div className="h-1/2">
+    <div className="cursor-pointer">
       <ScheduleXCalendar calendarApp={calendar} />
-
       <CalendarModalEdit
+        date={selectedDate}
+        type={selectedEvent ? "editar" : "adicionar"}
         setSelectedEvent={setSelectedEvent}
         title={selectedEvent ? "Editar plantão" : "Adicionar plantão"}
       >
@@ -91,6 +102,9 @@ function CalendarApp({ data }) {
 
 CalendarApp.propTypes = {
   data: PropTypes.any,
+  today: PropTypes.any,
+  month: PropTypes.any,
+  year: PropTypes.any,
 };
 
 export default CalendarApp;

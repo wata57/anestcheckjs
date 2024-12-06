@@ -12,6 +12,10 @@ import MobileNavBarButton from "../app-layout/mobile-bar/MobileNavBarButton";
 import MobileNavBarAddCaso from "../app-layout/mobile-bar/MobileNavBarAddCaso";
 
 function MobileBar() {
+  const now = new Date();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const year = now.getFullYear().toString();
+
   const location = useLocation();
 
   return (
@@ -24,14 +28,20 @@ function MobileBar() {
           {" "}
           {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}
         </MobileNavBarButton>
-        <MobileNavBarButton path="/calendario">
-          {location.pathname === "/calendario" ? (
+        <MobileNavBarButton
+          location="/calendario"
+          path={`/calendario?mes=${month}&ano=${year}`}
+        >
+          {window.location.pathname === "/calendario" ? (
             <IoCalendarOutline />
           ) : (
             <IoCalendarSharp />
           )}
         </MobileNavBarButton>
-        {location.pathname !== "/calendario" ? <MobileNavBarAddCaso /> : null}
+        {location.pathname !== "/calendario" &&
+        location.pathname !== "/novo-caso" ? (
+          <MobileNavBarAddCaso />
+        ) : null}
         <MobileNavBarButton path="/configuracoes">
           {" "}
           {location.pathname === "/configuracoes" ? (

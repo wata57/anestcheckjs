@@ -7,15 +7,20 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/values";
 
 function Home({ setSidebarOpen }) {
-  const id = 1;
+  const user_id = 1;
+  const onlyUpcomingDates = true;
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-  const { calendarData: data, isPending, count } = useCalendario(id, page);
+  const {
+    calendarData: data,
+    isPending,
+    count,
+  } = useCalendario(user_id, page, onlyUpcomingDates);
 
   return (
     <div
       onClick={() => setSidebarOpen(false)}
-      className="flex-1 w-full lg:flex lg:items-center lg:justify-center lg:mx-auto lg:w-3/4"
+      className="animate-top flex-1 w-full lg:flex lg:items-center lg:justify-center lg:mx-auto lg:w-3/4"
     >
       <div className="w-full max-w-full max-h-[500px] overflow-hidden lg:w-3/4">
         {isPending ? (
@@ -23,8 +28,11 @@ function Home({ setSidebarOpen }) {
             <Spinner />
           </div>
         ) : (
-          <>
-            <table className="w-full border-2 lg:rounded-3xl bg-white table-auto select-none">
+          <div className="flex flex-col items-center gap-8">
+            <h1 className="text-center lg:text-start font-bold text-2xl lg:text-4xl text-white self-start w-full">
+              Plantões cadastrados
+            </h1>
+            <table className="w-full border-2 lg:rounded-3xl bg-white table-auto select-none border-none">
               <thead className="bg-gray-100 text-sm lg:text-xl">
                 <tr>
                   <th className="px-1 py-2 lg:rounded-tl-3xl ">Data</th>
@@ -42,7 +50,7 @@ function Home({ setSidebarOpen }) {
               </tbody>
             </table>
             <Pagination pageSize={PAGE_SIZE} count={count} border={true} />
-          </>
+          </div>
         )}
       </div>
     </div>
