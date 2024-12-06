@@ -31,7 +31,7 @@ function MobileBar() {
             <IoCalendarSharp />
           )}
         </MobileNavBarButton>
-        <MobileNavBarAddCaso></MobileNavBarAddCaso>
+        {location.pathname !== "/calendario" ? <MobileNavBarAddCaso /> : null}
         <MobileNavBarButton path="/configuracoes">
           {" "}
           {location.pathname === "/configuracoes" ? (

@@ -40,6 +40,17 @@ body {
   --sx-internal-color-text: #000;
 }
 
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  text-align: center;
+}
+
 .sx-react-calendar-wrapper {
   height: 800px;
   max-height: 90vh;

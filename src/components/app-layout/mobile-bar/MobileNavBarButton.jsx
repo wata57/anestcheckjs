@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function MobileNavBarButton({ children, path }) {
   const location = useLocation();
-  console.log(location.pathname === path);
   return (
     <Link
       to={path}
