@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
-import {
-  BsLayoutSidebarInset,
-  BsLayoutSidebarInsetReverse,
-} from "react-icons/bs";
+// import {
+//   BsLayoutSidebarInset,
+//   BsLayoutSidebarInsetReverse,
+// } from "react-icons/bs";
 import Logo from "./Logo";
 import TopBarButton from "../app-layout/top-bar/TopBarButton";
 import { useLocation } from "react-router-dom";
@@ -32,17 +32,17 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
       : null;
 
   return (
-    <div className="flex items-center justify-between bg-gray-200 w-full">
+    <div className="flex items-center justify-between bg-blue-100 w-full">
       <div className="p-4 flex gap-2 justify-start">
         <div
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="cursor-pointer text-2xl"
         >
-          {!sidebarOpen ? (
+          {/* {!sidebarOpen ? (
             <BsLayoutSidebarInset />
           ) : (
             <BsLayoutSidebarInsetReverse />
-          )}{" "}
+          )}{" "} */}
         </div>
         <div
           className="flex cursor-pointer w-full"

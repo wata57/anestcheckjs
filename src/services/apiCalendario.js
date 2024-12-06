@@ -1,18 +1,29 @@
 import { supabase } from "./supabase";
 
-export async function getCalendario(id) {
-  const { data, error } = await supabase
+export async function getCalendario(id, page) {
+  const PAGE_SIZE = 4;
+  let query = supabase
     .from("calendars")
-    .select("*, hospitals(*)")
+    .select("*, hospitals(*)", {
+      count: "exact",
+    })
+    .eq("user_id", id)
+    .order("date", { ascending: true });
 
-    .eq("user_id", id);
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error("Error:", error.message);
     throw new Error("Calendario não foi carregado");
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function addPlantao(id, date, turno) {

@@ -1,15 +1,38 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addPlantao, deletePlantao, getCalendario } from "./apiCalendario";
 import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../utils/values";
 
-export function useCalendario(id) {
+export function useCalendario(id, page) {
+  const queryClient = useQueryClient();
+
   const { isPending, data } = useQuery({
-    queryKey: ["calendario", id],
-    queryFn: () => getCalendario(id),
+    queryKey: ["calendario", id, page],
+    queryFn: () => getCalendario(id, page),
   });
+  const calendarData = data?.data;
+  const count = data?.count;
+
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  if (page < pageCount) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario", id, page + 1],
+      queryFn: () => getCalendario(id, page + 1),
+    });
+  }
+
+  if (page > 1) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario", id, page - 1],
+      queryFn: () => getCalendario(id, page - 1),
+    });
+  }
+
   return {
     isPending,
-    data,
+    calendarData,
+    count,
   };
 }
 

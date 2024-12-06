@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 import TopBar from "./TopBar";
-import SideBar from "../app-layout/side-bar/SideBar";
+// import SideBar from "../app-layout/side-bar/SideBar";
 import MobileBar from "./MobileBar";
 
 function AppLayout({ setSidebarOpen, sidebarOpen }) {
@@ -9,7 +9,7 @@ function AppLayout({ setSidebarOpen, sidebarOpen }) {
     <div className="flex flex-col h-dvh">
       <TopBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex flex-1 relative w-full">
-        <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
         <Outlet />
       </div>
       <MobileBar />

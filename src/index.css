@@ -4,6 +4,7 @@
 
 body {
   font-family: "Poppins";
+  background-color: #e2e8f0;
 }
 
 :root {
@@ -26,7 +27,7 @@ body {
   --sx-color-surface-container: #f3edf7;
   --sx-color-surface-container-low: #f7f2fa;
   --sx-color-surface-container-high: #ece6f0;
-  --sx-color-background: #fff;
+  --sx-color-background: #e2e8f0;
   --sx-color-on-background: #1c1b1f;
   --sx-color-outline: #79747e;
   --sx-color-outline-variant: #c4c7c5;
