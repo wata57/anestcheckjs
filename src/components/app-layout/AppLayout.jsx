@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
-import TopBar from "./TopBar";
+import TopBar from "../app-layout/top-bar/TopBar";
 // import SideBar from "../app-layout/side-bar/SideBar";
-import MobileBar from "./MobileBar";
+import MobileBar from "../app-layout/mobile-bar/MobileBar";
 
 function AppLayout({ setSidebarOpen, sidebarOpen }) {
   return (

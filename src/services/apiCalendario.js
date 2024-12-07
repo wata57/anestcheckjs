@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 
-export async function getCalendario(user_id, page, onlyUpcomingDates) {
+export async function getCalendarioFuturo(user_id, page) {
   const PAGE_SIZE = 4;
 
   const today = new Date();
@@ -13,11 +13,42 @@ export async function getCalendario(user_id, page, onlyUpcomingDates) {
       count: "exact",
     })
     .eq("user_id", user_id)
-    .order("date", { ascending: true });
+    .order("date", { ascending: true })
+    .order("id", { ascending: true })
+    .gte("date", todayTimestamp);
 
-  if (onlyUpcomingDates) {
-    query = query.gte("date", todayTimestamp);
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
   }
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    console.error("Error:", error.message);
+    throw new Error("Calendario não foi carregado");
+  }
+
+  return { data, count };
+}
+
+export async function getCalendarioPassado(user_id, page) {
+  const PAGE_SIZE = 4;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayTimestamp = today.toISOString().slice(0, 19).replace("T", " ");
+
+  let query = supabase
+    .from("calendars")
+    .select("*, hospitals(*)", {
+      count: "exact",
+    })
+    .eq("user_id", user_id)
+    .order("date", { ascending: true })
+    .order("id", { ascending: true })
+    .lt("date", todayTimestamp);
 
   if (page) {
     const from = (page - 1) * PAGE_SIZE;
@@ -73,7 +104,7 @@ export async function addPlantao(user_id, date, turno, hospital) {
         hospital_id: hospital,
         anesthesia_group_id: 1,
         validated: false,
-        event: turno === "diurno" ? "Plantão diurno" : "Plantão noturno",
+        event: turno === "diurno" ? "diurno" : "noturno",
       },
     ])
     .select();

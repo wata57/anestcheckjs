@@ -4,17 +4,17 @@ import PropTypes from "prop-types";
 //   BsLayoutSidebarInset,
 //   BsLayoutSidebarInsetReverse,
 // } from "react-icons/bs";
-import Logo from "./Logo";
-import TopBarButton from "../app-layout/top-bar/TopBarButton";
+import Logo from "../../ui/Logo";
+import TopBarButton from "./TopBarButton";
 import { useLocation } from "react-router-dom";
 import {
+  // IoAddCircleOutline,
   IoCalendarOutline,
   IoCalendarSharp,
   IoHomeOutline,
   IoHomeSharp,
 } from "react-icons/io5";
 import { FaRegUser, FaRegUserCircle, FaUser } from "react-icons/fa";
-import { MdAdd } from "react-icons/md";
 
 function TopBar({ sidebarOpen, setSidebarOpen }) {
   const now = new Date();
@@ -55,7 +55,7 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
         </div>
       </div>
       <div className="hidden p-4 lg:flex-1 lg:flex lg:items-center lg:justify-end w-full lg:gap-8 ">
-        <div className="flex items-center font-semibold select-none bg-white">
+        <div className="flex items-center font-semibold select-none bg-primary-light text-white">
           <TopBarButton border="left" path="/home">
             {" "}
             {location.pathname === "home" ? <IoHomeOutline /> : <IoHomeSharp />}
@@ -75,10 +75,14 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
             )}{" "}
             Meus plantões
           </TopBarButton>
-          <TopBarButton path="/novo-caso">
-            {location.pathname === "/novo" ? <MdAdd /> : <MdAdd />}
+          {/* <TopBarButton path="/novo-caso">
+            {location.pathname === "/novo" ? (
+              <IoAddCircleOutline className="text-2xl" />
+            ) : (
+              <IoAddCircleOutline className="text-2xl" />
+            )}
             Novo paciente
-          </TopBarButton>
+          </TopBarButton> */}
         </div>
         <div className="flex items-center gap-2 select-none">
           <FaRegUserCircle className="text-white text-2xl" />

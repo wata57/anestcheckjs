@@ -1,7 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import Home from "./pages/Home";
-import AppLayout from "./components/ui/AppLayout";
 import Calendario from "./pages/Calendario";
 import NovoCaso from "./pages/NovoCaso";
 import Configuracoes from "./pages/Configuracoes";
@@ -9,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import Perfil from "./pages/Perfil";
+import AppLayout from "./components/app-layout/AppLayout";
 
 const queryClient = new QueryClient({
   defaultOptions: {

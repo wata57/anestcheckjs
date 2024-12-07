@@ -2,28 +2,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addPlantao,
   deletePlantao,
-  getCalendario,
   getCalendarioAll,
+  getCalendarioFuturo,
+  getCalendarioPassado,
 } from "./apiCalendario";
 import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/values";
 
-export function useCalendario(user_id, page, onlyUpcomingDates) {
+export function useCalendarioFuturo(user_id, page) {
   const queryClient = useQueryClient();
 
   const { isPending, data } = useQuery({
-    queryKey: [
-      "calendario",
-      user_id,
-      page,
-      `${onlyUpcomingDates ? "upcoming-dates" : null}`,
-    ],
-    queryFn: () =>
-      getCalendario(
-        user_id,
-        page,
-        `${onlyUpcomingDates ? "upcoming-dates" : null}`
-      ),
+    queryKey: ["calendario-futuro", user_id, page],
+    queryFn: () => getCalendarioFuturo(user_id, page),
   });
   const calendarData = data?.data;
   const count = data?.count;
@@ -32,25 +23,48 @@ export function useCalendario(user_id, page, onlyUpcomingDates) {
 
   if (page < pageCount) {
     queryClient.prefetchQuery({
-      queryKey: [
-        "calendario",
-        user_id,
-        page + 1,
-        `${onlyUpcomingDates ? "upcoming-dates" : null}`,
-      ],
-      queryFn: () => getCalendario(user_id, page + 1),
+      queryKey: ["calendario-futuro", user_id, page + 1],
+      queryFn: () => getCalendarioFuturo(user_id, page + 1),
     });
   }
 
   if (page > 1) {
     queryClient.prefetchQuery({
-      queryKey: [
-        "calendario",
-        user_id,
-        page - 1,
-        `${onlyUpcomingDates ? "upcoming-dates" : null}`,
-      ],
-      queryFn: () => getCalendario(user_id, page - 1),
+      queryKey: ["calendario-futuro", user_id, page - 1],
+      queryFn: () => getCalendarioFuturo(user_id, page - 1),
+    });
+  }
+
+  return {
+    isPending,
+    calendarData,
+    count,
+  };
+}
+
+export function useCalendarioPassado(user_id, page) {
+  const queryClient = useQueryClient();
+
+  const { isPending, data } = useQuery({
+    queryKey: ["calendario-passado", user_id, page],
+    queryFn: () => getCalendarioPassado(user_id, page),
+  });
+  const calendarData = data?.data;
+  const count = data?.count;
+
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  if (page < pageCount) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario-passado", user_id, page + 1],
+      queryFn: () => getCalendarioPassado(user_id, page + 1),
+    });
+  }
+
+  if (page > 1) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario-passado", user_id, page - 1],
+      queryFn: () => getCalendarioPassado(user_id, page - 1),
     });
   }
 

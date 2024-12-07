@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 
-function Pagination({ count, pageSize, border }) {
+function Pagination({ count, pageSize, text }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get("page")
     ? Number(searchParams.get("page"))
@@ -36,13 +36,11 @@ function Pagination({ count, pageSize, border }) {
 
   return (
     <div
-      className={`flex w-full text-xs md:text-sm justify-between select-none p-4 px-2 font-bold text-white ${
-        border ? "border-b-2" : ""
-      }`}
+      className={`flex w-full text-xs md:text-sm justify-between select-none p-4 px-2 font-bold  ${text}`}
     >
       <button
         className={`flex items-center ${
-          currentPage > 1 ? "text-white  cursor-pointer" : "text-transparent"
+          currentPage > 1 ? `${text}  cursor-pointer` : "text-transparent"
         }`}
         onClick={prevPage}
         disabled={currentPage === 1}
@@ -52,7 +50,7 @@ function Pagination({ count, pageSize, border }) {
       <div className="flex items-center text-sm">
         <span className="mr-2">Página:</span>
         <select
-          className="bg-primary-light border text-sm text-white border-gray-300  rounded-full px-2 py-1 outline-none  transition-all duration-300 cursor-pointer"
+          className={`bg-primary-light text-sm  rounded-full px-2 py-1 outline-none  transition-all duration-300 cursor-pointer text-white`}
           value={currentPage}
           onChange={handlePageChange}
         >
@@ -66,7 +64,7 @@ function Pagination({ count, pageSize, border }) {
       <button
         className={`flex items-center ${
           currentPage < pageCount
-            ? "text-white  cursor-pointer"
+            ? `${text}  cursor-pointer`
             : "text-transparent"
         }`}
         onClick={nextPage}
@@ -82,7 +80,7 @@ function Pagination({ count, pageSize, border }) {
 Pagination.propTypes = {
   count: PropTypes.number,
   pageSize: PropTypes.number,
-  border: PropTypes.bool,
+  text: PropTypes.string,
 };
 
 export default Pagination;

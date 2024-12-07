@@ -8,10 +8,10 @@ function TopBarButton({ children, path, location }) {
       className={`flex items-center gap-2 px-4 py-2  transition-colors duration-400 ${
         location
           ? window.location.pathname === location
-            ? "bg-primary-light text-white"
+            ? "bg-white text-black"
             : ""
           : window.location.pathname === path
-          ? "bg-primary-light text-white"
+          ? "bg-white text-black"
           : ""
       } `}
     >

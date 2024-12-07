@@ -8,8 +8,8 @@ import {
   IoSettingsOutline,
 } from "react-icons/io5";
 import { FaRegUser, FaUser } from "react-icons/fa";
-import MobileNavBarButton from "../app-layout/mobile-bar/MobileNavBarButton";
-import MobileNavBarAddCaso from "../app-layout/mobile-bar/MobileNavBarAddCaso";
+import MobileNavBarButton from "./MobileNavBarButton";
+// import MobileNavBarAddCaso from "./MobileNavBarAddCaso";
 
 function MobileBar() {
   const now = new Date();
@@ -38,10 +38,10 @@ function MobileBar() {
             <IoCalendarSharp />
           )}
         </MobileNavBarButton>
-        {location.pathname !== "/calendario" &&
+        {/* {location.pathname !== "/calendario" &&
         location.pathname !== "/novo-caso" ? (
           <MobileNavBarAddCaso />
-        ) : null}
+        ) : null} */}
         <MobileNavBarButton path="/configuracoes">
           {" "}
           {location.pathname === "/configuracoes" ? (
