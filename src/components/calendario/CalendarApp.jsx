@@ -25,6 +25,12 @@ function CalendarApp({ data, today }) {
   const eventsService = useState(() => createEventsServicePlugin())[0];
   const event = transformCalendarioData(data);
 
+  const date = new Date();
+  const formattedToday = date.toISOString().split("T")[0]; // Format today's date to "YYYY-MM-DD"
+
+  const isSelectedDateValid = selectedDate >= formattedToday;
+  const isSelectedEventValid = selectedEvent?.start >= formattedToday;
+
   const calendar = useCalendarApp({
     calendars: {
       confirmado: {
@@ -78,6 +84,7 @@ function CalendarApp({ data, today }) {
         setSearchParams(searchParams);
       },
       onEventClick(calendarEvent) {
+        setSelectedDate(calendarEvent?.start);
         setSelectedEvent(calendarEvent);
         searchParams.set("editar-evento", "verdade");
         setSearchParams(searchParams);
@@ -88,6 +95,20 @@ function CalendarApp({ data, today }) {
   useEffect(() => {
     eventsService.getAll();
   }, []);
+
+  useEffect(() => {
+    if (!isSelectedDateValid) {
+      searchParams.delete("editar-evento");
+      setSearchParams(searchParams);
+    }
+  }, [
+    isSelectedDateValid,
+    isSelectedEventValid,
+    searchParams,
+    setSearchParams,
+    selectedEvent,
+    selectedDate,
+  ]);
 
   return (
     <div className="cursor-pointer">

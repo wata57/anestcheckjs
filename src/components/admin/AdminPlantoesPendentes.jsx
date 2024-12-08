@@ -1,33 +1,30 @@
 import PropTypes from "prop-types";
 import { FaChevronUp } from "react-icons/fa";
-import { useCalendarioAdmin } from "../../services/useCalendario";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../ui/Spinner";
-import Table from "../ui/Table";
 import Pagination from "../ui/Pagination";
 import { PAGE_SIZE, USER_ID } from "../../utils/values";
 import AdminPlantaoPendenteItem from "./AdminPlantaoPendenteItem";
 import { useState } from "react";
-import { useUser } from "../../services/useUser";
-import { useConfirmarPlantao } from "../../services/useAdmin";
+// import { useUser } from "../../services/useUser";
+import {
+  useCalendarioAdmin,
+  useConfirmarPlantao,
+} from "../../services/useAdmin";
+import toast from "react-hot-toast";
 
-const tableHeader = [
-  { nome: "" },
-  { nome: "Médico" },
-  { nome: "Data" },
-  { nome: "Hospital" },
-];
+// const tableHeader = [
+//   { nome: "" },
+//   { nome: "Médico" },
+//   { nome: "Data" },
+//   { nome: "Hospital" },
+// ];
 
 function AdminPlantoesPendentes() {
   const user_id = USER_ID;
-  const { userData } = useUser(user_id);
-  const [checkedRows, setCheckedRows] = useState(() => {
-    // Parse the session storage value, default to an empty array if null
-    const saved = sessionStorage.getItem(
-      `plantoes-autorizacao-checkbox-${userData?.id}`
-    );
-    return saved ? JSON.parse(saved) : [];
-  });
+  // const { userData } = useUser(user_id);
+
+  const [checkedRows, setCheckedRows] = useState([]);
 
   const { confirmarPlantao } = useConfirmarPlantao(user_id, checkedRows);
 
@@ -40,25 +37,33 @@ function AdminPlantoesPendentes() {
     setSearchParams(searchParams);
   }
 
+  const handleSelectAll = () => {
+    if (checkedRows.length === data?.length) {
+      setCheckedRows([]); // Deselect all if all are already checked
+    } else {
+      const allIds = data?.map((shift) => shift.id);
+      setCheckedRows(allIds); // Select all rows
+    }
+  };
+
   const handleCheckboxChange = (id) => {
     setCheckedRows((prev) => {
       const updatedCheckedRows = prev.includes(id)
         ? prev.filter((rowId) => rowId !== id)
         : [...prev, id];
 
-      sessionStorage.setItem(
-        `plantoes-autorizacao-checkbox-${userData?.id}`,
-        JSON.stringify(updatedCheckedRows)
-      );
-
       return updatedCheckedRows;
     });
   };
 
   function handleConfirmar() {
+    if (checkedRows.length === 0) {
+      toast.error("Selecionar pelo menos um plantão");
+      return;
+    }
+
     confirmarPlantao({ user_id, checkedRows });
     setCheckedRows([]);
-    sessionStorage.removeItem(`plantoes-autorizacao-checkbox-${userData?.id}`);
   }
 
   return (
@@ -78,21 +83,42 @@ function AdminPlantoesPendentes() {
       ) : count === 0 ? (
         <div className="animate-top bg-primary-light">
           <p className=" flex justify-center items-center font-bold text-black bg-white w-full py-8">
-            Nenhum plantão realizado
+            Nenhum plantão pendente
           </p>
         </div>
       ) : (
-        <div className="animate-top py-4">
-          <Table tableHeader={tableHeader}>
-            {data?.map((shift) => (
-              <AdminPlantaoPendenteItem
-                checked={checkedRows.includes(shift.id)}
-                setIsChecked={() => handleCheckboxChange(shift.id)}
-                key={shift.id}
-                data={shift}
-              />
-            ))}
-          </Table>
+        <div className="animate-top py-4 flex flex-col">
+          <table className="w-full border-2 bg-white table-auto select-none border-none rounded-t-3xl">
+            <thead className="bg-gray-100 text-sm lg:text-xl">
+              <tr>
+                <th className={``}>
+                  {" "}
+                  <button
+                    onClick={handleSelectAll}
+                    className="py-2 px-4 rounded"
+                  >
+                    {checkedRows.length === data?.length
+                      ? "Desmarcar tudo"
+                      : "Selecionar tudo"}
+                  </button>
+                </th>
+                <th className={`px-1 py-2 `}>Médico</th>
+                <th className={`px-1 py-2 `}>Data</th>
+                <th className={`px-1 py-2 `}>Hospital</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((shift) => (
+                <AdminPlantaoPendenteItem
+                  checked={checkedRows.includes(shift.id)}
+                  setIsChecked={() => handleCheckboxChange(shift.id)}
+                  key={shift.id}
+                  data={shift}
+                />
+              ))}
+            </tbody>
+          </table>
+
           <div className="bg-white">
             <Pagination
               pageSize={PAGE_SIZE}
@@ -101,9 +127,13 @@ function AdminPlantoesPendentes() {
               bg="bg-primary-light"
             />
           </div>
-          {checkedRows.length > 0 && (
-            <button onClick={handleConfirmar}>Confirmar</button>
-          )}
+
+          <button
+            className="px-4 py-2 bg-primary-light text-white font-bold rounded-full self-end m-4 text-sm lg:text-lg"
+            onClick={handleConfirmar}
+          >
+            Confirmar
+          </button>
         </div>
       )}
     </div>

@@ -3,7 +3,9 @@ import { supabase } from "./supabase";
 export async function getUser(user_id) {
   let { data, error } = await supabase
     .from("users")
-    .select("*, role(*),user_hospital_autorizado(*, hospitals(*))")
+    .select(
+      "*, admin_hospital(*), role(*),user_hospital_autorizado(*, hospitals(*))"
+    )
     .eq("id", user_id)
     .single();
 

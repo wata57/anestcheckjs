@@ -3,15 +3,25 @@ import { formatYearCalendar } from "../../utils/calendar";
 import { capitalize } from "../../utils/stringManipulation";
 
 function AdminPlantaoPendenteItem({ data, checked, setIsChecked }) {
+  const handleRowClick = (e) => {
+    // Prevent triggering on checkbox click (if clicked on the checkbox itself)
+    if (e.target.type !== "checkbox") {
+      setIsChecked(); // Toggle the checkbox state
+    }
+  };
+
   return (
-    <tr className="text-xs lg:text-base">
+    <tr
+      onClick={handleRowClick}
+      className="text-xs lg:text-base cursor-pointer"
+    >
       <td className="p-4 text-center">
         <input
           id={`checkbox-${data.id}`}
           type="checkbox"
           checked={checked}
           onChange={setIsChecked}
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer"
         />
       </td>
       <td className="p-4 text-center">{data?.users.name}</td>

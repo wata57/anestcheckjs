@@ -1,17 +1,37 @@
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import { MESES, MESES_INVERTED } from "../../utils/values";
+import { useEffect } from "react";
 
 function CalendarFilter() {
+  const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
   const years = Array.from(
-    { length: 6 },
-    (_, index) => currentYear - 3 + index
+    { length: 4 },
+    (_, index) => currentYear - 2 + index
   );
   const [searchParams, setSearchParams] = useSearchParams();
 
   const month = searchParams.get("mes");
   const year = searchParams.get("ano");
+
+  useEffect(() => {
+    const parsedMonth = parseInt(month);
+    const parsedYear = parseInt(year);
+
+    if (
+      (month && (parsedMonth < 1 || parsedMonth > 12)) ||
+      (year && (parsedYear < currentYear - 2 || parsedYear > currentYear + 1))
+    ) {
+      const newMonth = currentMonth.toString().padStart(2, "0");
+      const newYear = currentYear.toString();
+
+      searchParams.set("mes", newMonth);
+      searchParams.set("ano", newYear);
+      setSearchParams(searchParams);
+      window.location.reload();
+    }
+  }, []);
 
   function handleMinus() {
     const month = parseInt(searchParams.get("mes"));
