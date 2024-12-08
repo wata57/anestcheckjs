@@ -3,10 +3,12 @@ import { FaCircle } from "react-icons/fa";
 import { useDeletePlantao } from "../../services/useCalendario";
 import { formatYearCalendar } from "../../utils/calendar";
 import Spinner2 from "../ui/Spinner2";
+import { USER_ID } from "../../utils/values";
+import { capitalize } from "../../utils/stringManipulation";
 
 function CalendarEdit({ data }) {
   const id = data.id;
-  const user_id = 1;
+  const user_id = USER_ID;
   const { deleteUserPlantao, isPending } = useDeletePlantao();
 
   function handleClick() {
@@ -21,7 +23,7 @@ function CalendarEdit({ data }) {
         <strong>{data?.location}</strong>
         <strong>{date}</strong>
       </div>
-      <strong className="text-center">{data?.title}</strong>
+      <strong className="text-center">Plantão {capitalize(data?.title)}</strong>
       <div className="flex items-center justify-center gap-1">
         <FaCircle
           className={`${

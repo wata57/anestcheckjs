@@ -6,7 +6,7 @@ function PerfilEdit({ setMenuOption, data }) {
   const [nome, setNome] = useState();
 
   return (
-    <div className="flex-1 bg-white rounded-t-3xl">
+    <div className="flex-1 bg-white rounded-t-3xl lg:rounded-none">
       {" "}
       <button
         onClick={() => setMenuOption(null)}
@@ -15,11 +15,11 @@ function PerfilEdit({ setMenuOption, data }) {
         Editar perfil
         <FaChevronUp />
       </button>
-      <div className="animate-top flex flex-col gap-2 p-8">
+      <div className="animate-top flex flex-col gap-2 px-8 py-4">
         <div className="flex flex-col gap-1">
           <label className="font-bold">Nome</label>
           <input
-            placeholder={data?.nome}
+            placeholder={data?.name}
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             className="outline-none placeholder:text-gray-400"

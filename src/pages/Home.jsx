@@ -4,19 +4,20 @@ import PlantaoItem from "../components/home/PlantaoItem";
 import Spinner from "../components/ui/Spinner";
 import Pagination from "../components/ui/Pagination";
 import { useSearchParams } from "react-router-dom";
-import { PAGE_SIZE } from "../utils/values";
+import { PAGE_SIZE, USER_ID } from "../utils/values";
 import Table from "../components/ui/Table";
+import { useUser } from "../services/useUser";
 
 const tableHeader = [
   { nome: "Data" },
-  { nome: "Período" },
   { nome: "Hospital" },
   { nome: "Grupo" },
   { nome: "Status" },
 ];
 
 function Home({ setSidebarOpen }) {
-  const user_id = 1;
+  const user_id = USER_ID;
+  const { userData, isPending: isPendingUserData } = useUser(user_id);
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const {
@@ -30,8 +31,8 @@ function Home({ setSidebarOpen }) {
       onClick={() => setSidebarOpen(false)}
       className="animate-top flex-1 w-full lg:flex lg:items-center lg:justify-center lg:mx-auto lg:w-3/4"
     >
-      <div className="w-full max-w-full max-h-[500px] overflow-hidden lg:w-3/4 lg:-translate-y-20">
-        {isPending ? (
+      <div className="w-full max-w-full max-h-[500px]  lg:w-3/4 lg:-translate-y-20">
+        {isPending || isPendingUserData ? (
           <div className="flex justify-center items-center">
             <Spinner />
           </div>
@@ -41,12 +42,12 @@ function Home({ setSidebarOpen }) {
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <div className=" flex flex-col items-center gap-8 w-full">
-              <h1 className="text-center lg:text-start font-bold text-2xl lg:text-4xl text-white self-start w-full">
-                Plantões pendentes ({count})
+            <div className=" flex flex-col items-center w-full gap-4">
+              <h1 className="font-bold text-xl lg:text-2xl text-white self-start w-full px-4">
+                Olá, {userData?.name}
               </h1>
+              <p className="text-white">Plantões agendados ({count})</p>
               <Table tableHeader={tableHeader} borderRounded={true}>
-                {" "}
                 {data?.map((shift) => (
                   <PlantaoItem key={shift.id} data={shift} />
                 ))}

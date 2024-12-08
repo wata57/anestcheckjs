@@ -43,6 +43,14 @@ function CalendarApp({ data, today }) {
           onContainer: "#000",
         },
       },
+      antigo: {
+        colorName: "antigo",
+        lightColors: {
+          main: "#f87171",
+          container: "#fecaca",
+          onContainer: "#000",
+        },
+      },
     },
     views: [createViewMonthGrid(), createViewMonthAgenda()],
     events: event,

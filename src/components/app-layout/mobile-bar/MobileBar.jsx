@@ -4,14 +4,18 @@ import {
   IoCalendarSharp,
   IoHomeOutline,
   IoHomeSharp,
-  IoSettings,
-  IoSettingsOutline,
 } from "react-icons/io5";
 import { FaRegUser, FaUser } from "react-icons/fa";
 import MobileNavBarButton from "./MobileNavBarButton";
+import { USER_ID } from "../../../utils/values";
+import { useUser } from "../../../services/useUser";
+import { RiAdminFill, RiAdminLine } from "react-icons/ri";
 // import MobileNavBarAddCaso from "./MobileNavBarAddCaso";
 
 function MobileBar() {
+  const user_id = USER_ID;
+  const { userData } = useUser(user_id);
+
   const now = new Date();
   const month = (now.getMonth() + 1).toString().padStart(2, "0");
   const year = now.getFullYear().toString();
@@ -24,10 +28,6 @@ function MobileBar() {
         <MobileNavBarButton path="/home">
           {location.pathname === "home" ? <IoHomeOutline /> : <IoHomeSharp />}
         </MobileNavBarButton>{" "}
-        <MobileNavBarButton path="/perfil">
-          {" "}
-          {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}
-        </MobileNavBarButton>
         <MobileNavBarButton
           location="/calendario"
           path={`/calendario?mes=${month}&ano=${year}`}
@@ -37,19 +37,20 @@ function MobileBar() {
           ) : (
             <IoCalendarSharp />
           )}
+        </MobileNavBarButton>{" "}
+        {userData?.role.id === 1 ? (
+          <MobileNavBarButton border="left" path="/admin">
+            {location.pathname === "/admin" ? <RiAdminFill /> : <RiAdminLine />}
+          </MobileNavBarButton>
+        ) : null}{" "}
+        <MobileNavBarButton path="/perfil">
+          {" "}
+          {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}
         </MobileNavBarButton>
         {/* {location.pathname !== "/calendario" &&
         location.pathname !== "/novo-caso" ? (
           <MobileNavBarAddCaso />
         ) : null} */}
-        <MobileNavBarButton path="/configuracoes">
-          {" "}
-          {location.pathname === "/configuracoes" ? (
-            <IoSettingsOutline />
-          ) : (
-            <IoSettings />
-          )}
-        </MobileNavBarButton>
       </div>
     </div>
   );

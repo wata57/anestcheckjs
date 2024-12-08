@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../components/ui/Spinner";
 import CalendarFilter from "../components/calendario/CalendarFilter";
+import { USER_ID } from "../utils/values";
 
 function Calendario({ setSidebarOpen }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +15,7 @@ function Calendario({ setSidebarOpen }) {
 
   const formattedDate = `${year}-${month}-01`;
 
-  const user_id = 1;
+  const user_id = USER_ID;
   const { calendarData: data, isPending } = useCalendarioAll(
     user_id,
     month,

@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import Perfil from "./pages/Perfil";
 import AppLayout from "./components/app-layout/AppLayout";
+import Admin from "./pages/Admin";
+import ProtectedRouteAdmin from "./protected-routes/ProtectedRouteAdmin";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +46,14 @@ function App() {
                 />
               }
             />
+            <Route
+              path="admin"
+              element={
+                <ProtectedRouteAdmin>
+                  <Admin />
+                </ProtectedRouteAdmin>
+              }
+            />
             <Route path="perfil" element={<Perfil />} />
             <Route path="novo-caso" element={<NovoCaso />} />
             <Route
@@ -63,7 +73,7 @@ function App() {
             duration: 2000,
           },
           error: {
-            duration: 1000,
+            duration: 2000,
           },
           style: {
             fontWeight: "bold",
@@ -72,6 +82,7 @@ function App() {
             padding: "16px 24px",
             backgroundColor: "#fffff",
             color: "#031011",
+            textAlign: "center",
           },
         }}
       />

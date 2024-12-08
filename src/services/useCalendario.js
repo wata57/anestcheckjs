@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addPlantao,
   deletePlantao,
+  getCalendarioAdmin,
   getCalendarioAll,
   getCalendarioFuturo,
   getCalendarioPassado,
@@ -46,7 +47,7 @@ export function useCalendarioPassado(user_id, page) {
   const queryClient = useQueryClient();
 
   const { isPending, data } = useQuery({
-    queryKey: ["calendario-passado", user_id, page],
+    queryKey: ["calendario-admin", user_id, page],
     queryFn: () => getCalendarioPassado(user_id, page),
   });
   const calendarData = data?.data;
@@ -56,14 +57,14 @@ export function useCalendarioPassado(user_id, page) {
 
   if (page < pageCount) {
     queryClient.prefetchQuery({
-      queryKey: ["calendario-passado", user_id, page + 1],
+      queryKey: ["calendario-admin", user_id, page + 1],
       queryFn: () => getCalendarioPassado(user_id, page + 1),
     });
   }
 
   if (page > 1) {
     queryClient.prefetchQuery({
-      queryKey: ["calendario-passado", user_id, page - 1],
+      queryKey: ["calendario-admin", user_id, page - 1],
       queryFn: () => getCalendarioPassado(user_id, page - 1),
     });
   }
@@ -83,6 +84,40 @@ export function useCalendarioAll(user_id, month, year) {
   });
   const calendarData = data?.data;
   const count = data?.count;
+
+  return {
+    isPending,
+    calendarData,
+    count,
+  };
+}
+
+export function useCalendarioAdmin(page, month, year) {
+  const queryClient = useQueryClient();
+
+  const { isPending, data } = useQuery({
+    queryKey: ["calendario-admin", page, month, year],
+    queryFn: () => getCalendarioAdmin(page, month, year),
+    gcTime: 0,
+  });
+  const calendarData = data?.data;
+  const count = data?.count;
+
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  if (page < pageCount) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario-admin", page + 1, month, year],
+      queryFn: () => getCalendarioAdmin(page + 1),
+    });
+  }
+
+  if (page > 1) {
+    queryClient.prefetchQuery({
+      queryKey: ["calendario-admin", page - 1, month, year],
+      queryFn: () => getCalendarioAdmin(page - 1),
+    });
+  }
 
   return {
     isPending,
