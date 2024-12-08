@@ -15,7 +15,7 @@ export function useConfirmarPlantao() {
     onSuccess: (user_id) => {
       queryClient.invalidateQueries(["calendario-admin", user_id]);
       toast.success("Plantões confirmados");
-      navigate("/admin?content=plantoes-pendentes");
+      navigate("/app/admin?content=plantoes-pendentes");
     },
     onError: () => {
       toast.error(

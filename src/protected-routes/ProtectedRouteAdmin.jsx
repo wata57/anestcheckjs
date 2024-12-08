@@ -13,7 +13,7 @@ function ProtectedRouteAdmin({ children }) {
   useEffect(() => {
     if (!isPending) {
       if (userData?.role.id !== 1) {
-        navigate("/home");
+        navigate("/app/home");
       }
     }
   }, [navigate, userData, isPending]);

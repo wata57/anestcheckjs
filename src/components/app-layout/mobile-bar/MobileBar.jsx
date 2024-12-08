@@ -25,12 +25,12 @@ function MobileBar() {
   return (
     <div className="lg:hidden fixed bottom-0 w-full text-xl bg-gray-200">
       <div className="relative flex items-center justify-between w-full ">
-        <MobileNavBarButton path="/home">
+        <MobileNavBarButton location="/app/home" path="home">
           {location.pathname === "home" ? <IoHomeOutline /> : <IoHomeSharp />}
         </MobileNavBarButton>{" "}
         <MobileNavBarButton
-          location="/calendario"
-          path={`/calendario?mes=${month}&ano=${year}`}
+          location="/app/calendario"
+          path={`calendario?mes=${month}&ano=${year}`}
         >
           {window.location.pathname === "/calendario" ? (
             <IoCalendarOutline />
@@ -39,11 +39,11 @@ function MobileBar() {
           )}
         </MobileNavBarButton>{" "}
         {userData?.role.id === 1 ? (
-          <MobileNavBarButton border="left" path="/admin">
+          <MobileNavBarButton location="/app/admin" border="left" path="admin">
             {location.pathname === "/admin" ? <RiAdminFill /> : <RiAdminLine />}
           </MobileNavBarButton>
         ) : null}{" "}
-        <MobileNavBarButton path="/perfil">
+        <MobileNavBarButton location="/app/perfil" path="perfil">
           {" "}
           {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}
         </MobileNavBarButton>

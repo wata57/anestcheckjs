@@ -10,7 +10,7 @@ function TopBarButton({ children, path, location }) {
           ? window.location.pathname === location
             ? "bg-white text-black"
             : ""
-          : window.location.pathname === path
+          : window.location.pathname === `/${path}`
           ? "bg-white text-black"
           : ""
       } `}

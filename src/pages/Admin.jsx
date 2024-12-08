@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
 import AdminMenu from "../components/admin/AdminMenu";
 import AdminPlantoesPendentes from "../components/admin/AdminPlantoesPendentes";
+import AdminAutorizarMedicoHospital from "../components/admin/AdminAutorizarMedicoHospital";
 
 function Admin() {
   const [searchParams] = useSearchParams();
@@ -19,6 +20,7 @@ function Admin() {
           </div>
         )}
         {content === "plantoes-pendentes" && <AdminPlantoesPendentes />}
+        {content === "autorizar-medicos" && <AdminAutorizarMedicoHospital />}
       </div>
       <div className="hidden lg:block bg-primary-light p-8"></div>
     </div>

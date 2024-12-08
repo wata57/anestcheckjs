@@ -28,18 +28,19 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
   const year = now.getFullYear().toString();
 
   const location = useLocation();
+
   const title =
     location.pathname === "/home"
       ? "Tela inicial"
-      : location.pathname === "/perfil"
+      : location.pathname === "/app/perfil"
       ? "Perfil"
-      : location.pathname === "/calendario"
+      : location.pathname === "/app/calendario"
       ? "Meus plantões"
-      : location.pathname === "/configuracoes"
+      : location.pathname === "/app/configuracoes"
       ? "Configurações"
-      : location.pathname === "/novo-caso"
+      : location.pathname === "/app/novo-caso"
       ? "Novo caso"
-      : location.pathname === "/admin"
+      : location.pathname === "/app/admin"
       ? "Administrador"
       : null;
   return (
@@ -65,8 +66,8 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
       <div className="hidden p-4 lg:flex-1 lg:flex lg:items-center lg:justify-end w-full lg:gap-8 ">
         <div className="flex items-center font-semibold select-none bg-primary-light text-white">
           {userData?.role.id === 1 ? (
-            <TopBarButton border="left" path="/admin">
-              {location.pathname === "/admin" ? (
+            <TopBarButton location="/app/admin" border="left" path="admin">
+              {location.pathname === "/app/admin" ? (
                 <RiAdminFill />
               ) : (
                 <RiAdminLine />
@@ -74,8 +75,8 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
               Administrador
             </TopBarButton>
           ) : null}{" "}
-          <TopBarButton border="left" path="/home">
-            {location.pathname === "/home" ? (
+          <TopBarButton location="/app/home" border="left" path="home">
+            {location.pathname === "/app/home" ? (
               <IoHomeSharp />
             ) : (
               <IoHomeOutline />
@@ -83,18 +84,19 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
             Tela inicial
           </TopBarButton>{" "}
           <TopBarButton
-            location="/calendario"
-            path={`/calendario?mes=${month}&ano=${year}`}
+            location="/app/calendario"
+            path={`/app/calendario?mes=${month}&ano=${year}`}
           >
-            {location.pathname === "/calendario" ? (
+            {location.pathname === "/app/calendario" ? (
               <IoCalendarSharp />
             ) : (
               <IoCalendarOutline />
             )}{" "}
             Meus plantões
           </TopBarButton>{" "}
-          <TopBarButton path="/perfil">
-            {location.pathname === "/perfil" ? <FaUser /> : <FaRegUser />}Perfil
+          <TopBarButton location="/app/perfil" path="perfil">
+            {location.pathname === "/app/perfil" ? <FaUser /> : <FaRegUser />}
+            Perfil
           </TopBarButton>
           {/* <TopBarButton path="/novo-caso">
             {location.pathname === "/novo" ? (

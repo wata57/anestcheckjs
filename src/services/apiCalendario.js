@@ -9,7 +9,7 @@ export async function getCalendarioFuturo(user_id, page) {
 
   let query = supabase
     .from("calendars")
-    .select("*, hospitals(*)", {
+    .select("*, hospitals(*),profile:validator(name)", {
       count: "exact",
     })
     .eq("user_id", user_id)

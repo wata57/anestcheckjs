@@ -11,6 +11,13 @@ function AdminMenu({ menuOption, setMenuOption }) {
       >
         Plantões pendentes
       </AdminMenuBtn>
+      <AdminMenuBtn
+        params="autorizar-medicos"
+        setMenuOption={setMenuOption}
+        menuOption={menuOption}
+      >
+        Autorizar médicos
+      </AdminMenuBtn>
     </div>
   );
 }

@@ -24,7 +24,7 @@ function AdminPlantaoPendenteItem({ data, checked, setIsChecked }) {
           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer"
         />
       </td>
-      <td className="p-4 text-center">{data?.users.name}</td>
+      <td className="p-4 text-center">{data?.profile.name}</td>
       <td className="p-4 text-center flex flex-col items-center gap-1 font-bold">
         <p>{formatYearCalendar(data?.date.split("T")[0])}</p>
         <p>{capitalize(data?.event)}</p>

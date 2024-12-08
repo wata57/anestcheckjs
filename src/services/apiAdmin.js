@@ -27,7 +27,7 @@ export async function getCalendarioAdmin(page, month, year) {
 
   let query = supabase
     .from("calendars")
-    .select("*, hospitals(*), users:user_id(*)", {
+    .select("*, hospitals(*),profile:user_id(*)", {
       count: "exact",
     })
     .eq("validated", false)

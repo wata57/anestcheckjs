@@ -11,6 +11,8 @@ import Perfil from "./pages/Perfil";
 import AppLayout from "./components/app-layout/AppLayout";
 import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protected-routes/ProtectedRouteAdmin";
+import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +31,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Navigate to="home" replace />} />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
           <Route
+            path="app"
             element={
               <AppLayout
                 sidebarOpen={sidebarOpen}

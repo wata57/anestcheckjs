@@ -26,7 +26,7 @@ function Perfil() {
             <div className="lg:hidden lg:flex-1 flex flex-col items-center lg:justify-center gap-4 lg:gap-0 py-4 lg:py-0">
               <img
                 className="rounded-full max-w-[50px] sm:max-w-[100px] lg:max-w-[250px] lg:-translate-y-24"
-                src="/public/images/placeholder.png"
+                src="/images/placeholder.png"
               />{" "}
               <div className="text-white  text-center lg:-translate-y-20">
                 <h1 className="font-bold text-lg lg:text-3xl">{data?.name}</h1>
