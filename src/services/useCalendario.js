@@ -78,7 +78,7 @@ export function useCalendarioPassado(user_id, page) {
 }
 
 export function useCalendarioAll(user_id, month, year) {
-  const { isPending, data } = useQuery({
+  const { isPending, data, refetch } = useQuery({
     queryKey: ["calendario", month, year],
     queryFn: () => getCalendarioAll(user_id, month, year),
     gcTime: 0,
@@ -90,6 +90,7 @@ export function useCalendarioAll(user_id, month, year) {
     isPending,
     calendarData,
     count,
+    refetch,
   };
 }
 

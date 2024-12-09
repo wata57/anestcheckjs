@@ -10,7 +10,7 @@ function AdminAutorizarMedicoHospital() {
   const { hospitais_admin } = useUser();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialState = {
-    listaMedico: [],
+    listaMedico: JSON.parse(sessionStorage.getItem("medicos")) || [],
   };
 
   console.log(hospitais_admin);

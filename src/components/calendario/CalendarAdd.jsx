@@ -4,12 +4,18 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Spinner2 from "../ui/Spinner2";
 import { useUser } from "../../services/auth/useUser";
+import { useNavigate } from "react-router-dom";
 
-function CalendarAdd({ date }) {
+function CalendarAdd({ date, refetch }) {
   const [turno, setTurno] = useState("");
   const [hospital, setHospital] = useState("");
   const { user_id, hospitais_autorizados, isPeding: isPendingUser } = useUser();
   const { addUserPlantao, isPending } = useAddPlantao();
+  const navigate = useNavigate();
+
+  const now = new Date();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const year = now.getFullYear().toString();
 
   function handleClick() {
     if (!turno) {
@@ -23,6 +29,8 @@ function CalendarAdd({ date }) {
     }
 
     addUserPlantao({ user_id, date, turno, hospital });
+    refetch();
+    navigate(`/app/calendario?mes=${month}&ano=${year}`);
   }
 
   return (
@@ -68,6 +76,7 @@ function CalendarAdd({ date }) {
 
 CalendarAdd.propTypes = {
   date: PropTypes.any,
+  refetch: PropTypes.any,
 };
 
 export default CalendarAdd;

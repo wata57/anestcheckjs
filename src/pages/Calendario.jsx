@@ -16,11 +16,11 @@ function Calendario({ setSidebarOpen }) {
   const formattedDate = `${year}-${month}-01`;
 
   const { user_id } = useUser();
-  const { calendarData: data, isPending } = useCalendarioAll(
-    user_id,
-    month,
-    year
-  );
+  const {
+    calendarData: data,
+    isPending,
+    refetch,
+  } = useCalendarioAll(user_id, month, year);
   useEffect(() => {
     searchParams.delete("editar-evento");
     setSearchParams(searchParams);
@@ -40,7 +40,7 @@ function Calendario({ setSidebarOpen }) {
         </div>
       ) : (
         <div className="">
-          <CaldendarApp data={data} today={formattedDate} />
+          <CaldendarApp data={data} today={formattedDate} refetch={refetch} />
         </div>
       )}
     </div>

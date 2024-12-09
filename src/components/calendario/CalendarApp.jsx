@@ -18,7 +18,7 @@ import { useSearchParams } from "react-router-dom";
 import CalendarEdit from "./CalendarEdit";
 import CalendarAdd from "./CalendarAdd";
 
-function CalendarApp({ data, today }) {
+function CalendarApp({ data, today, refetch }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedDate, setSelectedDate] = useState();
   const [selectedEvent, setSelectedEvent] = useState();
@@ -122,7 +122,7 @@ function CalendarApp({ data, today }) {
         {selectedEvent ? (
           <CalendarEdit data={selectedEvent} />
         ) : (
-          <CalendarAdd date={selectedDate} />
+          <CalendarAdd refetch={refetch} date={selectedDate} />
         )}
       </CalendarModalEdit>
     </div>
@@ -134,6 +134,7 @@ CalendarApp.propTypes = {
   today: PropTypes.any,
   month: PropTypes.any,
   year: PropTypes.any,
+  refetch: PropTypes.any,
 };
 
 export default CalendarApp;
