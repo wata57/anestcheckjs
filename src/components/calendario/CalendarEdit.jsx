@@ -3,12 +3,12 @@ import { FaCircle } from "react-icons/fa";
 import { useDeletePlantao } from "../../services/useCalendario";
 import { formatYearCalendar } from "../../utils/calendar";
 import Spinner2 from "../ui/Spinner2";
-import { USER_ID } from "../../utils/values";
 import { capitalize } from "../../utils/stringManipulation";
+import { useUser } from "../../services/auth/useUser";
 
 function CalendarEdit({ data }) {
   const id = data.id;
-  const user_id = USER_ID;
+  const { user_id } = useUser();
   const { deleteUserPlantao, isPending } = useDeletePlantao();
 
   function handleClick() {

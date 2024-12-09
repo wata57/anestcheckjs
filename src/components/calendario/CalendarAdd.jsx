@@ -3,15 +3,13 @@ import { useAddPlantao } from "../../services/useCalendario";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Spinner2 from "../ui/Spinner2";
-import { useUser } from "../../services/useUser";
-import { USER_ID } from "../../utils/values";
+import { useUser } from "../../services/auth/useUser";
 
 function CalendarAdd({ date }) {
   const [turno, setTurno] = useState("");
   const [hospital, setHospital] = useState("");
-  const user_id = USER_ID;
+  const { user_id, hospitais_autorizados, isPeding: isPendingUser } = useUser();
   const { addUserPlantao, isPending } = useAddPlantao();
-  const { userData, isPeding: isPendingUser } = useUser(user_id);
 
   function handleClick() {
     if (!turno) {
@@ -49,7 +47,7 @@ function CalendarAdd({ date }) {
           onChange={(e) => setHospital(e.target.value)}
         >
           <option value="">Selecionar hospital</option>
-          {userData?.user_hospital_autorizado.map((hospital) => (
+          {hospitais_autorizados?.map((hospital) => (
             <option key={hospital.hospitals.id} value={hospital.hospitals.id}>
               {hospital.hospitals.hospital_name}
             </option>

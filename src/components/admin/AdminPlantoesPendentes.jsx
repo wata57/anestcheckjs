@@ -3,7 +3,7 @@ import { FaChevronUp } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import Pagination from "../ui/Pagination";
-import { PAGE_SIZE, USER_ID } from "../../utils/values";
+import { PAGE_SIZE } from "../../utils/values";
 import AdminPlantaoPendenteItem from "./AdminPlantaoPendenteItem";
 import { useState } from "react";
 // import { useUser } from "../../services/useUser";
@@ -12,6 +12,7 @@ import {
   useConfirmarPlantao,
 } from "../../services/useAdmin";
 import toast from "react-hot-toast";
+import { useUser } from "../../services/auth/useUser";
 
 // const tableHeader = [
 //   { nome: "" },
@@ -21,7 +22,7 @@ import toast from "react-hot-toast";
 // ];
 
 function AdminPlantoesPendentes() {
-  const user_id = USER_ID;
+  const { user_id } = useUser();
   // const { userData } = useUser(user_id);
 
   const [checkedRows, setCheckedRows] = useState([]);
@@ -31,6 +32,7 @@ function AdminPlantoesPendentes() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const { calendarData: data, isPending, count } = useCalendarioAdmin(page);
+  console.log(data);
 
   function handleClick() {
     searchParams.delete("content");
@@ -72,7 +74,7 @@ function AdminPlantoesPendentes() {
         onClick={handleClick}
         className="flex justify-between items-center bg-white w-full p-4 text-start font-bold rounded-t-3xl lg:rounded-none"
       >
-        Plantões pendentes
+        Gerenciar plantões pendentes
         <FaChevronUp />
       </button>
 

@@ -4,9 +4,10 @@ import Table from "../ui/Table";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../ui/Spinner";
 import Pagination from "../ui/Pagination";
-import { PAGE_SIZE, USER_ID } from "../../utils/values";
+import { PAGE_SIZE } from "../../utils/values";
 import PerfilPlantaoItem from "./PerfilPlantaoItem";
 import { useCalendarioPassado } from "../../services/useCalendario";
+import { useUser } from "../../services/auth/useUser";
 
 const tableHeader = [
   { nome: "Data" },
@@ -16,7 +17,7 @@ const tableHeader = [
 ];
 
 function PerfilPlantoes({ setMenuOption }) {
-  const user_id = USER_ID;
+  const { user_id } = useUser();
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const {

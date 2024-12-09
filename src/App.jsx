@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protected-routes/ProtectedRouteAdmin";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
+import ProtectedRouteApp from "./protected-routes/ProtectedRouteApp";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,16 +31,18 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate to="home" replace />} />
+          <Route index element={<Navigate to="/login" replace />} />
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
           <Route
             path="app"
             element={
-              <AppLayout
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
+              <ProtectedRouteApp>
+                <AppLayout
+                  sidebarOpen={sidebarOpen}
+                  setSidebarOpen={setSidebarOpen}
+                />
+              </ProtectedRouteApp>
             }
           >
             <Route

@@ -15,13 +15,11 @@ import {
   IoHomeSharp,
 } from "react-icons/io5";
 import { FaRegUser, FaUser } from "react-icons/fa";
-import { useUser } from "../../../services/useUser";
-import { USER_ID } from "../../../utils/values";
+import { useUser } from "../../../services/auth/useUser";
 import { RiAdminFill, RiAdminLine } from "react-icons/ri";
 
 function TopBar({ sidebarOpen, setSidebarOpen }) {
-  const user_id = USER_ID;
-  const { userData } = useUser(user_id);
+  const { role } = useUser();
 
   const now = new Date();
   const month = (now.getMonth() + 1).toString().padStart(2, "0");
@@ -65,7 +63,7 @@ function TopBar({ sidebarOpen, setSidebarOpen }) {
       </div>
       <div className="hidden p-4 lg:flex-1 lg:flex lg:items-center lg:justify-end w-full lg:gap-8 ">
         <div className="flex items-center font-semibold select-none bg-primary-light text-white">
-          {userData?.role.id === 1 ? (
+          {role?.id === 1 ? (
             <TopBarButton location="/app/admin" border="left" path="admin">
               {location.pathname === "/app/admin" ? (
                 <RiAdminFill />

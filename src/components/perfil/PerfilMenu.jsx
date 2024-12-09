@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import PerfilMenuBtn from "./PerfilMenuBtn";
+import PerfilLogout from "./PerfilLogout";
 
 function PerfilMenu({ menuOption, setMenuOption }) {
   return (
@@ -13,9 +14,7 @@ function PerfilMenu({ menuOption, setMenuOption }) {
       <PerfilMenuBtn setMenuOption={setMenuOption} menuOption={menuOption}>
         Hospitais autorizados
       </PerfilMenuBtn>
-      {/* <PerfilMenuBtn setMenuOption={setMenuOption} menuOption={menuOption}>
-        Procedimentos realizados
-      </PerfilMenuBtn> */}
+      <PerfilLogout>Sair</PerfilLogout>
     </div>
   );
 }

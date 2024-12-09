@@ -2,14 +2,12 @@ import { useState } from "react";
 import PerfilMenu from "../components/perfil/PerfilMenu";
 import PerfilEdit from "../components/perfil/PerfilEdit";
 import PerfilPlantoes from "../components/perfil/PerfilPlantoes";
-import { useUser } from "../services/useUser";
+import { useUser } from "../services/auth/useUser";
 import PerfilHospitais from "../components/perfil/PerfilHospitais";
 import Spinner from "../components/ui/Spinner";
-import { USER_ID } from "../utils/values";
 
 function Perfil() {
-  const user_id = USER_ID;
-  const { userData: data, isPending: isPendingUserData } = useUser(user_id);
+  const { role, name, crm, isPending: isPendingUserData } = useUser();
   const [menuOption, setMenuOption] = useState("menu");
 
   return (
@@ -29,10 +27,10 @@ function Perfil() {
                 src="/images/placeholder.png"
               />{" "}
               <div className="text-white  text-center lg:-translate-y-20">
-                <h1 className="font-bold text-lg lg:text-3xl">{data?.name}</h1>
+                <h1 className="font-bold text-lg lg:text-3xl">{name}</h1>
                 <div className="flex items-center justify-center gap-2 text-base lg:text-3xl">
-                  <p>{data?.role.role_name}</p>
-                  <p>CRM {data?.crm}</p>
+                  <p>{role.role_name}</p>
+                  <p>CRM {crm}</p>
                 </div>
               </div>
             </div>
@@ -43,10 +41,10 @@ function Perfil() {
               src="/images/placeholder.png"
             />{" "}
             <div className="text-white  text-center lg:whitespace-nowrap lg:-translate-y-20">
-              <h1 className="font-bold text-lg lg:text-3xl">{data?.name}</h1>
+              <h1 className="font-bold text-lg lg:text-3xl">{name}</h1>
               <div className="flex items-center justify-center gap-2 text-base lg:text-xl">
-                <p>{data?.role.role_name}</p>
-                <p>CRM {data?.crm}</p>
+                <p>{role.role_name}</p>
+                <p>CRM {crm}</p>
               </div>
             </div>
           </div>
@@ -54,11 +52,7 @@ function Perfil() {
             <PerfilMenu setMenuOption={setMenuOption} menuOption={menuOption} />
           )}
           {menuOption === "Editar perfil" && (
-            <PerfilEdit
-              data={data}
-              setMenuOption={setMenuOption}
-              menuOption={menuOption}
-            />
+            <PerfilEdit setMenuOption={setMenuOption} menuOption={menuOption} />
           )}
           {menuOption === "Plantões realizados" && (
             <PerfilPlantoes
@@ -68,7 +62,6 @@ function Perfil() {
           )}
           {menuOption === "Hospitais autorizados" && (
             <PerfilHospitais
-              data={data}
               setMenuOption={setMenuOption}
               menuOption={menuOption}
             />

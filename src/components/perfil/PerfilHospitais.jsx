@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { FaChevronUp } from "react-icons/fa";
+import { useUser } from "../../services/auth/useUser";
 
-function PerfilHospitais({ setMenuOption, data }) {
+function PerfilHospitais({ setMenuOption }) {
+  const { hospitais_autorizados } = useUser();
+
   return (
     <div className="flex-1 bg-white rounded-t-3xl lg:rounded-none">
       <button
@@ -12,7 +15,7 @@ function PerfilHospitais({ setMenuOption, data }) {
         <FaChevronUp />
       </button>
       <ol className="animate-top flex flex-col gap-2 px-8 py-4 list-decimal font-bold">
-        {data.user_hospital_autorizado.map((item, i) => (
+        {hospitais_autorizados?.map((item, i) => (
           <li key={i}>{item.hospitals.hospital_name}</li>
         ))}
       </ol>
@@ -22,7 +25,6 @@ function PerfilHospitais({ setMenuOption, data }) {
 
 PerfilHospitais.propTypes = {
   setMenuOption: PropTypes.func.isRequired,
-  data: PropTypes.any,
 };
 
 export default PerfilHospitais;

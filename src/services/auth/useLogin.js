@@ -15,6 +15,7 @@ export function useLogin() {
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: () => {
       queryClient.invalidateQueries(["user"]);
+      toast.success("Login feito com sucesso. Aguarde!");
     },
     onError: () => toast.error("Usuário e/ou senha inválidos"),
   });

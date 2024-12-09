@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { inputCss } from "../utils/css";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Spinner from "../components/ui/Spinner";
 import { useLogin } from "../services/auth/useLogin";
+import { useUser } from "../services/auth/useUser";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isPending } = useLogin();
+  const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
 
   function handleVisible(e) {
     e.preventDefault();
@@ -30,6 +34,12 @@ function Login() {
       }
     );
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app/home");
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <>

@@ -7,14 +7,12 @@ import {
 } from "react-icons/io5";
 import { FaRegUser, FaUser } from "react-icons/fa";
 import MobileNavBarButton from "./MobileNavBarButton";
-import { USER_ID } from "../../../utils/values";
-import { useUser } from "../../../services/useUser";
+import { useUser } from "../../../services/auth/useUser";
 import { RiAdminFill, RiAdminLine } from "react-icons/ri";
 // import MobileNavBarAddCaso from "./MobileNavBarAddCaso";
 
 function MobileBar() {
-  const user_id = USER_ID;
-  const { userData } = useUser(user_id);
+  const { role } = useUser();
 
   const now = new Date();
   const month = (now.getMonth() + 1).toString().padStart(2, "0");
@@ -38,7 +36,7 @@ function MobileBar() {
             <IoCalendarSharp />
           )}
         </MobileNavBarButton>{" "}
-        {userData?.role.id === 1 ? (
+        {role.id === 1 ? (
           <MobileNavBarButton location="/app/admin" border="left" path="admin">
             {location.pathname === "/admin" ? <RiAdminFill /> : <RiAdminLine />}
           </MobileNavBarButton>

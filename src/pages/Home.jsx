@@ -4,9 +4,9 @@ import PlantaoItem from "../components/home/PlantaoItem";
 import Spinner from "../components/ui/Spinner";
 import Pagination from "../components/ui/Pagination";
 import { useSearchParams } from "react-router-dom";
-import { PAGE_SIZE, USER_ID } from "../utils/values";
+import { PAGE_SIZE } from "../utils/values";
 import Table from "../components/ui/Table";
-import { useUser } from "../services/useUser";
+import { useUser } from "../services/auth/useUser";
 
 const tableHeader = [
   { nome: "Data" },
@@ -16,8 +16,7 @@ const tableHeader = [
 ];
 
 function Home({ setSidebarOpen }) {
-  const user_id = USER_ID;
-  const { userData, isPending: isPendingUserData } = useUser(user_id);
+  const { name, user_id, isPending: isPendingUserData } = useUser();
   const [searchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const {
@@ -44,7 +43,7 @@ function Home({ setSidebarOpen }) {
           <div className="flex flex-col items-center">
             <div className=" flex flex-col items-center w-full gap-4">
               <h1 className="font-bold text-xl lg:text-2xl text-white self-start w-full px-4">
-                Olá, {userData?.name}
+                Olá, {name}
               </h1>
               <p className="text-white">Plantões agendados ({count})</p>
               <Table tableHeader={tableHeader} borderRounded={true}>
