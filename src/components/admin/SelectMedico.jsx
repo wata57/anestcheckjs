@@ -142,12 +142,12 @@ function SelectMedico({ state, dispatch }) {
         </div>
         {state.listaMedico?.length > 0 && (
           <div>
-            <ul className="bg-white text-primary-light font-bold flex gap-4 flex-wrap px-4 pt-4 justify-center rounded-b-2xl pb-4">
+            <ul className="bg-primary-light font-bold flex gap-4 flex-wrap px-4 pt-4 justify-center rounded-b-2xl pb-4">
               {state.listaMedico?.map((item, index) => (
                 <li
                   key={index}
                   onClick={() => toggleDeleteButton(index)}
-                  className={`animate-top shadow-md   flex gap-1 items-center py-2 px-2 rounded-3xl  cursor-pointer ${
+                  className={`animate-top shadow-md bg-white text-primary-light flex gap-1 items-center py-2 px-2 rounded-3xl  cursor-pointer ${
                     selectedForDeletion === index ? "text-base" : "md:text-lg"
                   }`}
                 >
