@@ -154,7 +154,7 @@ function SelectMedico({ state, dispatch }) {
                   {item?.name}
                   {selectedForDeletion === index && (
                     <button
-                      className="text-red-500 dark:text-white"
+                      className="text-red-500"
                       onClick={() => handleDeleteMedication(index)}
                     >
                       <TiDelete size={20} />
