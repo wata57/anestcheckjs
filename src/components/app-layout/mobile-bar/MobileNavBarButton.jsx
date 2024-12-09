@@ -5,7 +5,7 @@ function MobileNavBarButton({ children, path, location }) {
   return (
     <Link
       to={path}
-      className={`flex items-center justify-center  flex-1 p-4 rounded-sm  transition-colors duration-400 ${
+      className={`flex items-center justify-center  flex-1 pt-4 pb-6  transition-colors duration-400 ${
         location
           ? window.location.pathname === location
             ? "bg-primary-light text-white"
