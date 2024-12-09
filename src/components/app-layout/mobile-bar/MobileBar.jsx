@@ -38,12 +38,16 @@ function MobileBar() {
         </MobileNavBarButton>{" "}
         {role.id === 1 ? (
           <MobileNavBarButton location="/app/admin" border="left" path="admin">
-            {location.pathname === "/admin" ? <RiAdminFill /> : <RiAdminLine />}
+            {location.pathname === "/app/admin" ? (
+              <RiAdminLine />
+            ) : (
+              <RiAdminFill />
+            )}
           </MobileNavBarButton>
         ) : null}{" "}
         <MobileNavBarButton location="/app/perfil" path="perfil">
           {" "}
-          {location.pathname === "/perfil" ? <FaRegUser /> : <FaUser />}
+          {location.pathname === "/app/perfil" ? <FaRegUser /> : <FaUser />}
         </MobileNavBarButton>
         {/* {location.pathname !== "/calendario" &&
         location.pathname !== "/novo-caso" ? (
