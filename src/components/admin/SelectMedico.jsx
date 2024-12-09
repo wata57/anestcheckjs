@@ -96,7 +96,7 @@ function SelectMedico({ state, dispatch }) {
       >
         <div className="relative flex">
           <div
-            className={`flex items-center w-full bg-primary-light dark:bg-dark-bg-3  ${
+            className={`flex items-center w-full bg-primary-light ${
               state.listaMedico?.length > 0 || filteredMedicos.length > 0
                 ? "rounded-t-3xl"
                 : "rounded-3xl"
@@ -107,7 +107,7 @@ function SelectMedico({ state, dispatch }) {
               placeholder="Procurar médico..."
               value={medico}
               onChange={handleInputChange}
-              className={`md:text-xl flex-1 p-3 rounded-3xl font-bold transition-colors text-center duration-300 focus:outline-none md:text-center placeholder-white bg-primary-light dark:bg-dark-bg-3  ${
+              className={`md:text-xl flex-1 p-3 rounded-3xl font-bold transition-colors text-center duration-300 focus:outline-none md:text-center placeholder-white bg-primary-light ${
                 state.listaMedico?.length > 0 || filteredMedicos.length > 0
                   ? "rounded-t-3xl"
                   : "rounded-3xl"
@@ -130,7 +130,7 @@ function SelectMedico({ state, dispatch }) {
               {filteredMedicos?.map((item, i) => (
                 <li
                   key={i}
-                  className="flex gap-2 cursor-pointer p-2  text-lg md:text-xl justify-center items-center text-center font-bold bg-primary-light"
+                  className="flex gap-2 cursor-pointer p-2  text-lg md:text-xl justify-center items-center text-center font-bold bg-white text-primary-light"
                   onClick={() => handleSelectOption(item)}
                 >
                   {item?.name}
