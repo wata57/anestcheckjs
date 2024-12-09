@@ -77,7 +77,7 @@ function Login() {
                   </div>
                 </div>
 
-                <div className="flex flex-col text-black">
+                <div className="flex flex-col ">
                   <div className="relative flex items-center gap-2  select-none">
                     <input
                       type={visible ? "text" : "password"}
@@ -89,7 +89,7 @@ function Login() {
                       disabled={isPending}
                       className={`${inputCss} placeholder:text-gray-500 transition-all duration-300 text-gray-950`}
                     />
-                    <div className="text-primary-light ">
+                    <div className="text-primary-light">
                       <RiLockPasswordFill size={30} />
                     </div>
                     <button
@@ -134,20 +134,6 @@ function Login() {
                 </div>
               </div>
             </form>
-            {/* <div className="flex gap-2 my-4">
-                <div className="animate-left dark:text-white flex gap-2 items-center">
-                  <LoginAppleGoogle />
-                </div>
-              </div> */}
-            {/* <div className="animate-left flex gap-4 w-full justify-center items-center text-sm md:text-lg dark:text-dark-text select-none">
-                <p>Não tem uma conta?</p>
-                <Link
-                  className="text-gray-950 dark:text-white lg:hover:text-quart-1 font-semibold transition-all duration-300 underline"
-                  to="/cadastro"
-                >
-                  Cadastrar-se
-                </Link>
-              </div> */}
           </>
         </div>
       </div>

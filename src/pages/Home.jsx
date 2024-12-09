@@ -7,6 +7,8 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/values";
 import Table from "../components/ui/Table";
 import { useUser } from "../services/auth/useUser";
+import { useQueryClient } from "@tanstack/react-query";
+import { HiRefresh } from "react-icons/hi";
 
 const tableHeader = [
   { nome: "Data" },
@@ -24,6 +26,14 @@ function Home({ setSidebarOpen }) {
     isPending,
     count,
   } = useCalendarioFuturo(user_id, page);
+
+  const queryClient = useQueryClient();
+
+  const handleRefetch = () => {
+    queryClient.refetchQueries(["calendario-futuro", user_id, page], {
+      exact: true,
+    });
+  };
 
   return (
     <div
@@ -45,7 +55,16 @@ function Home({ setSidebarOpen }) {
               <h1 className="font-bold text-xl lg:text-2xl text-white self-start w-full px-4">
                 Olá, {name}
               </h1>
-              <p className="text-white">Plantões agendados ({count})</p>
+              <div className="flex items-center justify-between w-full px-3">
+                <p className="text-white">Plantões agendados ({count})</p>
+                <button
+                  onClick={handleRefetch}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md  flex items-center gap-2"
+                >
+                  Atualizar
+                  <HiRefresh />
+                </button>
+              </div>
               <Table tableHeader={tableHeader} borderRounded={true}>
                 {data?.map((shift) => (
                   <PlantaoItem key={shift.id} data={shift} />
