@@ -39,7 +39,7 @@ function CalendarEdit({ data }) {
           disabled={isPending}
           onClick={handleClick}
         >
-          {isPending ? <Spinner2 /> : "Cancelar requisição"}
+          {isPending ? <Spinner2 /> : "Cancelar solicitação"}
         </button>
       )}
       {data?.validated && (
