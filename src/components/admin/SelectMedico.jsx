@@ -142,7 +142,7 @@ function SelectMedico({ state, dispatch }) {
         </div>
         {state.listaMedico?.length > 0 && (
           <div>
-            <ul className="bg-primary-light text-white font-bold flex gap-4 flex-wrap px-4 pt-4 justify-center rounded-b-2xl pb-4">
+            <ul className="bg-white text-primary-light font-bold flex gap-4 flex-wrap px-4 pt-4 justify-center rounded-b-2xl pb-4">
               {state.listaMedico?.map((item, index) => (
                 <li
                   key={index}
