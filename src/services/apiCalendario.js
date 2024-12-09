@@ -69,7 +69,7 @@ export async function getCalendarioPassado(user_id, page) {
 export async function getCalendarioAll(user_id, month, year) {
   let query = supabase
     .from("calendars")
-    .select("*, hospitals(*)", {
+    .select("*, hospitals(*), profile:validator(*)", {
       count: "exact",
     })
     .eq("user_id", user_id)
@@ -114,7 +114,7 @@ export async function addPlantao(user_id, date, turno, hospital) {
     throw new Error("Calendario não foi carregado");
   }
 
-  return { data, user_id };
+  return { data, user_id, date };
 }
 
 export async function deletePlantao(user_id, id) {

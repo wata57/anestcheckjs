@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCalendarioAdmin, updateConfirmarPlantao } from "./apiAdmin";
+import {
+  getCalendarioAdmin,
+  getUsersAdmin,
+  updateConfirmarPlantao,
+} from "./apiAdmin";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { PAGE_SIZE } from "../utils/values";
@@ -58,5 +62,17 @@ export function useCalendarioAdmin(page, month, year) {
     isPending,
     calendarData,
     count,
+  };
+}
+
+export function useUsersAdmin() {
+  const { isPending, data } = useQuery({
+    queryKey: ["users-admin"],
+    queryFn: () => getUsersAdmin(),
+  });
+
+  return {
+    isPending,
+    data,
   };
 }

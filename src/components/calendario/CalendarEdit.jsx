@@ -42,6 +42,9 @@ function CalendarEdit({ data }) {
           {isPending ? <Spinner2 /> : "Cancelar requisição"}
         </button>
       )}
+      {data?.validated && (
+        <p className="self-end text-xs">Confirmado por {data?.validator}</p>
+      )}
     </div>
   );
 }

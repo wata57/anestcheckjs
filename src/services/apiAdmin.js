@@ -58,3 +58,17 @@ export async function getCalendarioAdmin(page, month, year) {
 
   return { data, count };
 }
+
+export async function getUsersAdmin() {
+  const { data, error } = await supabase
+    .from("profile")
+    .select("*")
+    .eq("role", 2);
+
+  if (error) {
+    console.error("Erro ao selecionar usuários:", error.message);
+    throw new Error("Falha ao selecionar usuários.");
+  }
+
+  return { data };
+}

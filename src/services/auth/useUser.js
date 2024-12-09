@@ -16,6 +16,7 @@ export function useUser() {
     email: userData?.profileData.email,
     crm: userData?.profileData.crm,
     role: userData?.profileData.role,
+    hospitais_admin: userData?.profileData.admin_hospital,
     hospitais_autorizados: userData?.profileData.user_hospital_autorizado,
     isAuthenticated: userData?.userData.user?.role === "authenticated",
   };

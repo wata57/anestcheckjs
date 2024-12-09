@@ -12,10 +12,11 @@ import { PAGE_SIZE } from "../utils/values";
 export function useCalendarioFuturo(user_id, page) {
   const queryClient = useQueryClient();
 
-  const { isPending, data } = useQuery({
+  const { isPending, data, refetch } = useQuery({
     queryKey: ["calendario-futuro", user_id, page],
     queryFn: () => getCalendarioFuturo(user_id, page),
   });
+
   const calendarData = data?.data;
   const count = data?.count;
 
@@ -39,6 +40,7 @@ export function useCalendarioFuturo(user_id, page) {
     isPending,
     calendarData,
     count,
+    refetch,
   };
 }
 

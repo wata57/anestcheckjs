@@ -8,6 +8,7 @@ export function transformCalendarioData(data) {
     if (eventDate < today) {
       calendarId = "antigo";
     }
+    const validator = item.validated ? item?.profile?.name : null;
 
     return {
       id: item.id.toString(),
@@ -16,6 +17,7 @@ export function transformCalendarioData(data) {
       start: eventDate,
       end: eventDate,
       validated: item.validated,
+      validator: validator,
       calendarId: calendarId,
     };
   });

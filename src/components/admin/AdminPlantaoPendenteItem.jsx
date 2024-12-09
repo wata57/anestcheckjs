@@ -15,7 +15,7 @@ function AdminPlantaoPendenteItem({ data, checked, setIsChecked }) {
       onClick={handleRowClick}
       className="text-xs lg:text-base cursor-pointer"
     >
-      <td className="p-4 text-center">
+      <td className="px-4 text-center">
         <input
           id={`checkbox-${data.id}`}
           type="checkbox"
@@ -24,15 +24,15 @@ function AdminPlantaoPendenteItem({ data, checked, setIsChecked }) {
           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 cursor-pointer"
         />
       </td>
-      <td className="p-4 text-center">{data?.profile.name}</td>
-      <td className="p-4 text-center flex flex-col items-center gap-1 font-bold">
+      <td className="px-4 py-3 text-center">{data?.profile.name}</td>
+      <td className="px-4 py-3 text-center flex flex-col items-center gap-1 font-bold">
         <p>{formatYearCalendar(data?.date.split("T")[0])}</p>
         <p>{capitalize(data?.event)}</p>
       </td>
-      <td className="p-4 text-center lg:whitespace-nowrap">
+      <td className="px-4 py-3 text-center lg:whitespace-nowrap">
         {data?.hospitals.hospital_name}
       </td>
-      {/* <td className="p-4">
+      {/* <td className="px-4 py-3">
         <div className="flex items-center justify-center gap-2">
           <p className="font-bold px-2 py-1 rounded-full bg-yellow-200 text-yellow-900">
             Aguardando

@@ -14,16 +14,8 @@ import {
 import toast from "react-hot-toast";
 import { useUser } from "../../services/auth/useUser";
 
-// const tableHeader = [
-//   { nome: "" },
-//   { nome: "Médico" },
-//   { nome: "Data" },
-//   { nome: "Hospital" },
-// ];
-
 function AdminPlantoesPendentes() {
   const { user_id } = useUser();
-  // const { userData } = useUser(user_id);
 
   const [checkedRows, setCheckedRows] = useState([]);
 
@@ -32,7 +24,6 @@ function AdminPlantoesPendentes() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
   const { calendarData: data, isPending, count } = useCalendarioAdmin(page);
-  console.log(data);
 
   function handleClick() {
     searchParams.delete("content");
@@ -41,10 +32,10 @@ function AdminPlantoesPendentes() {
 
   const handleSelectAll = () => {
     if (checkedRows.length === data?.length) {
-      setCheckedRows([]); // Deselect all if all are already checked
+      setCheckedRows([]);
     } else {
       const allIds = data?.map((shift) => shift.id);
-      setCheckedRows(allIds); // Select all rows
+      setCheckedRows(allIds);
     }
   };
 
@@ -89,7 +80,15 @@ function AdminPlantoesPendentes() {
           </p>
         </div>
       ) : (
-        <div className="animate-top py-4 flex flex-col">
+        <div className="animate-top flex flex-col">
+          <div className="bg-white">
+            <Pagination
+              pageSize={PAGE_SIZE}
+              count={count}
+              border={true}
+              bg="bg-primary-light"
+            />
+          </div>
           <table className="w-full border-2 bg-white table-auto select-none border-none rounded-t-3xl">
             <thead className="bg-gray-100 text-sm lg:text-xl">
               <tr>
@@ -97,7 +96,7 @@ function AdminPlantoesPendentes() {
                   {" "}
                   <button
                     onClick={handleSelectAll}
-                    className="py-2 px-4 rounded"
+                    className="py-2 px-4 rounded text-xs"
                   >
                     {checkedRows.length === data?.length
                       ? "Desmarcar tudo"
@@ -120,15 +119,6 @@ function AdminPlantoesPendentes() {
               ))}
             </tbody>
           </table>
-
-          <div className="bg-white">
-            <Pagination
-              pageSize={PAGE_SIZE}
-              count={count}
-              border={true}
-              bg="bg-primary-light"
-            />
-          </div>
 
           <button
             className="px-4 py-2 bg-primary-light text-white font-bold rounded-full self-end m-4 text-sm lg:text-lg"

@@ -21,7 +21,6 @@ function Calendario({ setSidebarOpen }) {
     month,
     year
   );
-
   useEffect(() => {
     searchParams.delete("editar-evento");
     setSearchParams(searchParams);

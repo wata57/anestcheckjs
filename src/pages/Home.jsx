@@ -7,7 +7,6 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../utils/values";
 import Table from "../components/ui/Table";
 import { useUser } from "../services/auth/useUser";
-import { useQueryClient } from "@tanstack/react-query";
 import { HiRefresh } from "react-icons/hi";
 
 const tableHeader = [
@@ -25,15 +24,8 @@ function Home({ setSidebarOpen }) {
     calendarData: data,
     isPending,
     count,
+    refetch,
   } = useCalendarioFuturo(user_id, page);
-
-  const queryClient = useQueryClient();
-
-  const handleRefetch = () => {
-    queryClient.refetchQueries(["calendario-futuro", user_id, page], {
-      exact: true,
-    });
-  };
 
   return (
     <div
@@ -58,21 +50,27 @@ function Home({ setSidebarOpen }) {
               <div className="flex items-center justify-between w-full px-3">
                 <p className="text-white">Plantões agendados ({count})</p>
                 <button
-                  onClick={handleRefetch}
+                  onClick={refetch}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md  flex items-center gap-2"
                 >
                   Atualizar
                   <HiRefresh />
                 </button>
+              </div>{" "}
+              <div className="w-full">
+                <div className="bg-white w-full">
+                  <Pagination
+                    pageSize={PAGE_SIZE}
+                    count={count}
+                    border={true}
+                  />
+                </div>
+                <Table tableHeader={tableHeader}>
+                  {data?.map((shift) => (
+                    <PlantaoItem key={shift.id} data={shift} />
+                  ))}
+                </Table>
               </div>
-              <Table tableHeader={tableHeader} borderRounded={true}>
-                {data?.map((shift) => (
-                  <PlantaoItem key={shift.id} data={shift} />
-                ))}
-              </Table>
-            </div>
-            <div className="bg-white w-full">
-              <Pagination pageSize={PAGE_SIZE} count={count} border={true} />
             </div>
           </div>
         )}

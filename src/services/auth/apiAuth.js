@@ -53,7 +53,7 @@ export async function getUser() {
   let { data: profileData, error } = await supabase
     .from("profile")
     .select(
-      "*, admin_hospital(*), role(*),user_hospital_autorizado(*, hospitals(*))"
+      "*, admin_hospital(*, hospitals(*)), role(*),user_hospital_autorizado(*, hospitals(*))"
     )
     .eq("id", userData.user.id)
     .single();
